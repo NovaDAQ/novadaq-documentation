@@ -1,0 +1,602 @@
+{
+  "AshRiver": {
+    "group": "Operations",
+    "purpose": "Site services: CM3350 Modbus alarm collection into SQLite, Raspberry Pi UPS shutdown monitoring, and a containerized Redmine instance.",
+    "operations": "CM3350 is polled by cron; preserve both its SQLite database and previousData.txt checkpoint together. The UPS monitor needs I2C access and shutdown privileges. Redmine has separate application/database volumes; use its README for restore ownership requirements."
+  },
+  "BufferNodeEVB": {
+    "group": "Data path",
+    "purpose": "Receives DCM millislices, assembles milliblocks in MegaPool, retains recent data, and selects windows requested by global triggers.",
+    "operations": "Run BufferNodeEVBapp only with the intended partition and connection/run configuration. Watch receive timeouts, missing microslices, retained-history depth, and downstream logger connectivity. Drain the run before restarting a node; its in-memory history cannot survive a restart."
+  },
+  "ChannelDecoder": {
+    "group": "Analysis",
+    "purpose": "Qt utility for translating logical and electronics channel identifiers.",
+    "operations": "Use with the correct detector map and compare a known channel in both directions. A wrong detector selection can produce plausible but incorrect identifiers; this is an interactive tool, not a daemon."
+  },
+  "DAQApplicationManager": {
+    "group": "Control",
+    "purpose": "Qt process-management application with host/process grouping, status watchers, and a Run Control interface.",
+    "operations": "Process definitions come from the configuration/database layer. Verify host, partition, Kerberos credentials, and expected instance counts before launching groups. Inspect process exit status and status-message age when a panel reports an unresponsive application."
+  },
+  "DAQChannelMap": {
+    "group": "Core libraries",
+    "purpose": "Maps detector, plane, cell, DCM, FEB, and pixel identifiers for Far Detector, Near Detector, NDOS, and Test Beam geometries.",
+    "operations": "Consumers must select a detector-specific map. Validate representative encode/decode round trips, detector boundaries, and view orientation after a mapping change. This is a library; it has no independent service lifecycle."
+  },
+  "DAQClusterUtils": {
+    "group": "Operations",
+    "purpose": "Site-specific farm inventory, host checks, mount management, and message-logger balancing scripts.",
+    "operations": "Select FarDet, NearDet, or TestBeam explicitly and inspect the host list before a distributed command. Check mounts and logging destinations before restarting farm processes. Host lists in source are historical configuration, not proof of current membership."
+  },
+  "DAQDataFormats": {
+    "group": "Core libraries",
+    "purpose": "Versioned raw run, event, trigger, data-block, microslice, and nanoslice representations, checksums, and simulation helpers.",
+    "operations": "Keep producers and readers on compatible format versions. Validate marker pairs, lengths, run-size accounting, and checksums with known sample files before deployment. Format changes affect loggers, dispatchers, parsers, and analysis clients together."
+  },
+  "DAQHit.old": {
+    "group": "Analysis",
+    "purpose": "Legacy hit representation and extraction tools for raw files and shared-memory data.",
+    "operations": "The .old suffix is a lifecycle signal, not confirmed retirement. Link against the matching historical channel map and data formats; compare extracted cell, plane, charge, and timestamp against a known event before reuse."
+  },
+  "DAQMessages": {
+    "group": "Messaging",
+    "purpose": "DDS IDL contracts for Run Control, global triggers, DCS, DDT, spill, SNEWS, and supernova traffic, plus mailbox helpers and status codes.",
+    "operations": "Regenerate and rebuild generated message libraries with the DDS toolchain used by all communicating peers. Match DDS partition and mailbox names. Changes to IDL layout or enum values require coordinated producer/consumer validation."
+  },
+  "DAQMessagesZMQ": {
+    "group": "Messaging",
+    "purpose": "ZeroMQ context/socket and typed mailbox wrappers with DDT and supernova message structures.",
+    "operations": "Configure bind/connect endpoints consistently. Payloads currently use native C++ object layout; compiler ABI, field sizes, and message length must agree across peers. Test malformed and disconnected-peer behavior before using a new producer."
+  },
+  "DAQNetworkUtils": {
+    "group": "Messaging",
+    "purpose": "Header-only Qt SSH tunnel helper used by network-facing GUIs.",
+    "operations": "Provide the gateway, target host, remote port, and local port; verify the forwarded endpoint independently after starting SSH. Process startup alone does not establish remote reachability. Stop the tunnel when its owning GUI is closed."
+  },
+  "DAQOperationsTools": {
+    "group": "Operations",
+    "purpose": "Startup, shutdown, health checking, recovery, environment setup, and distributed process orchestration for DAQ services.",
+    "operations": "Use the site setup and explicit DAQ partition before invoking launchers. Prefer status checks and the Run Control lifecycle over killing processes directly. Inspect recovery scripts before execution because they can affect many hosts and hardware services."
+  },
+  "DAQQualityCheck": {
+    "group": "Core libraries",
+    "purpose": "Checks internal consistency of raw events and, where enabled, run structures.",
+    "operations": "Use on captured or synthetic files before accepting data-format changes. Interpret failures by structure level: run/header, trigger, data block, microslice, nanoslice. A successful consistency check is not a physics-quality certification."
+  },
+  "DAQSimulationManager": {
+    "group": "Simulation and examples",
+    "purpose": "Coordinates simulation modes, synthetic data sources, and trigger scheduling.",
+    "operations": "Keep simulations in an isolated partition with explicit input/output files and trigger settings. Confirm every destination is a simulator before starting. Observe generated timestamps and event counts at both source and logger."
+  },
+  "DCMApplication": {
+    "group": "Data path",
+    "purpose": "DCM state machine, hardware/simulated readers, monitoring, and dispatch of detector data to event-builder clients.",
+    "operations": "Requires the appropriate DCM device nodes or a deliberately selected simulated reader. Establish partition, connection, and run configuration through Run Control. Check FEB links, status flags, data activity, and buffer-node connections before enabling a run."
+  },
+  "DCMBootLoader": {
+    "group": "Hardware",
+    "purpose": "RedBoot/eCos build tree and NOvA PowerPC board support for DCM and TDU bootloaders.",
+    "operations": "The README specifies historical cross-toolchain and board-specific CONFIG scripts. Match board revision and flash type before building. Preserve a known bootable image and recovery path; compilation was reviewed, but no firmware was flashed in this review."
+  },
+  "DCMGuiTools": {
+    "group": "Hardware",
+    "purpose": "Qt DCM register viewer with hexadecimal controls and register display widgets.",
+    "operations": "Connect to the intended DCM and validate firmware/register-map compatibility. Register writes are hardware operations; separate inspection from editing. Capture before/after values and use a test board when changing control behavior."
+  },
+  "DCM_ProgUtils": {
+    "group": "Hardware",
+    "purpose": "DCM/FEB register access, programming, DSO readout, timing, and temperature utilities.",
+    "operations": "Most tools require /dev/dcm_control or /dev/dcm_data. Stop conflicting readout before exclusive diagnostics, confirm output paths, and preserve firmware/settings before programming. The executable help and source are the authority for each command's units and register semantics."
+  },
+  "DCMulator": {
+    "group": "Hardware",
+    "purpose": "USB/MATLAB-based DCM/FEB checkout and programming environment with USB support code and bundled libraries.",
+    "operations": "Match the USB interface, MATLAB/MEX ABI, board revision, and firmware configuration. Retain checkout results per device and run on a dedicated test stand. Existing local MATLAB changes were preserved and are not represented by remote commit links."
+  },
+  "DDSSimD": {
+    "group": "Messaging",
+    "purpose": "Simulation DDS implementation, demos, and generated reference documentation.",
+    "operations": "Use its own CMake build and documented DDS compatibility surface. Treat it as an alternative messaging implementation requiring protocol/behavior checks against the intended peers. Review focused on implementation/build surfaces; generated HTML was not audited page by page."
+  },
+  "DDTManager": {
+    "group": "Control",
+    "purpose": "Qt application for managing data-driven trigger processes and monitoring their states.",
+    "operations": "Check configured hosts, process definitions, partition, and status-message freshness before group operations. Validate expected DDT instance counts and trigger delivery downstream after restart."
+  },
+  "Dashboard": {
+    "group": "Monitoring",
+    "purpose": "Python/Tk and PHP operational dashboard with message-analyzer launch and alarm/email helpers.",
+    "operations": "Verify the status-file producer and consumer paths, update cadence, and display environment. An old status file must not be treated as current health. Alarm helpers can send messages; configure destinations deliberately before enabling them."
+  },
+  "DataConcentratorModule": {
+    "group": "Hardware",
+    "purpose": "Earlier DCM userspace, CPLD/FPGA programming, and kernel-driver implementation.",
+    "operations": "Determine whether deployment uses this tree or dcm_kernel_module before applying fixes. Match the old driver ABI and hardware image. Register/FIFO tests and flashing require a dedicated board and recovery procedure."
+  },
+  "DatabaseUtils": {
+    "group": "Control",
+    "purpose": "Typed DAQ configuration, application-manager, DCS, and run-history database access plus configuration editors.",
+    "operations": "Select the intended database/schema and account before using an editor or administrative script. Preserve named/global configuration identity, inspect transaction failures, and validate generated configuration against known runs. Database changes require an explicit rollback artifact."
+  },
+  "DetectorPlotter": {
+    "group": "Analysis",
+    "purpose": "Readers for DCS/round-robin data and tools producing time-series/ROOT diagnostic output.",
+    "operations": "Verify database/RRD roots, requested time window, sampling step, and output destination. Check missing data and timestamps before interpreting a plot. Readers need the matching database, RRD, and ROOT dependencies."
+  },
+  "DispatcherClient": {
+    "group": "Data path",
+    "purpose": "Framework client and event handle for receiving dispatched raw events into analysis modules.",
+    "operations": "Match the dispatcher protocol, event format, framework ABI, and channel-map dependencies. Verify a complete event and reconnect behavior with captured/test data before online use."
+  },
+  "DispatcherClientExampleApp": {
+    "group": "Simulation and examples",
+    "purpose": "Qt example application for connecting to an event dispatcher.",
+    "operations": "Use an isolated or read-only dispatcher endpoint and verify connection settings in the GUI. This is a demonstration client; do not assume its retry and throughput behavior is suitable for a long-running service."
+  },
+  "EpicsProviderForMessaging": {
+    "group": "Messaging",
+    "purpose": "EPICS Channel Access servers and clients that carry RMS messaging through process variables.",
+    "operations": "Set RMS_CUSTOM_ENVIRONMENT and the EPICS runtime correctly; namespace collisions can connect unrelated clients. Validate PV discovery and end-to-end message delivery before starting consumers. Rotate CAS logs using the provided operational scripts only after checking their paths."
+  },
+  "ErrorHandler": {
+    "group": "Monitoring",
+    "purpose": "Message analyzer with rules, GUI, and actions that can send mail, scripts, or Run Control messages.",
+    "operations": "Review action rules and destinations before enabling them. Check message ingestion and rule matches separately from action success. Exercise rules against captured messages with action execution mocked before changing production responses."
+  },
+  "EventBuilder": {
+    "group": "Data path",
+    "purpose": "Generic TCP event builder with per-connection circular buffers, event assembly, and reporting.",
+    "operations": "Match subevent format and timestamp semantics with EventBuilderClient. Size buffers for expected rate and event windows; monitor missing sources and backpressure. Establish a controlled stop/drain sequence before replacing the process."
+  },
+  "EventBuilderClient": {
+    "group": "Data path",
+    "purpose": "TCP connection and sender library for delivering subevents to EventBuilder.",
+    "operations": "Configure server address, send timeout, retry count, and socket buffer size. Test connection loss and partial sends on a local test server. Repeated connection failures should not consume descriptors or publish partial events."
+  },
+  "EventBuilderClient_OLD": {
+    "group": "Data path",
+    "purpose": "Earlier event-builder client implementation and tests retained for historical compatibility.",
+    "operations": "Confirm whether any deployed binary links this variant before scheduling work. Use the corresponding old server and message/data contracts for reproduction; do not substitute the newer client solely because names are similar."
+  },
+  "EventBuilder_OLD": {
+    "group": "Data path",
+    "purpose": "Earlier generic event-builder implementation with connection-buffer and event-manager tests.",
+    "operations": "Validate any reuse against the historical client protocol and buffer assumptions. Preserve old/new distinction in release manifests; a similarly named executable is not proof of binary compatibility."
+  },
+  "EventDispatcher": {
+    "group": "Data path",
+    "purpose": "Qt event-dispatcher application with memory model, configuration window, and daemon support.",
+    "operations": "Identify the selected shared-memory source and listener configuration. Check that event sizes and producer/consumer format versions match; observe stalled consumers and output queues before changing rate limits."
+  },
+  "EventDispatcher_Client": {
+    "group": "Data path",
+    "purpose": "Packaged Qt event-dispatcher client and resources.",
+    "operations": "Set the target host/port and expected event format, then verify reception with a known event. Use GUI connection/error status to distinguish server unavailability from malformed data."
+  },
+  "EventDispatcher_CommandSet": {
+    "group": "Messaging",
+    "purpose": "Command and acknowledgement definitions shared by event-dispatcher components.",
+    "operations": "Treat command identifiers, payload shapes, and acknowledgement semantics as a wire contract. Rebuild and test server/client pairs together when changing this package; it has no independent daemon."
+  },
+  "EventDispatcher_Server": {
+    "group": "Data path",
+    "purpose": "Standalone event-dispatch server with shared-memory inspection, dispatch threads, GUI, and pattern-source utility.",
+    "operations": "Check the shared-memory segment identity, producer activity, listener port, and expected event format. Monitor dispatch threads and consumer connections. Use test patterns only on a dedicated segment/partition."
+  },
+  "EventDispatcher_Server_FMWK": {
+    "group": "Data path",
+    "purpose": "Framework-integrated event-dispatch server variant.",
+    "operations": "Requires the corresponding analysis framework in addition to dispatcher and Qt dependencies. Distinguish this variant from the standalone server in launch configuration; validate event ownership and framework callbacks under load."
+  },
+  "EventDump": {
+    "group": "Analysis",
+    "purpose": "Command-line tools to inspect run headers, events, configurations, trigger livetime, and incomplete data.",
+    "operations": "Work from an immutable copy of a raw file when diagnosing corruption. Compare parser status, declared lengths, and file size; malformed input must fail or terminate predictably. Keep output artifacts alongside the exact input revision/checksum."
+  },
+  "EventMemoryViewer": {
+    "group": "Analysis",
+    "purpose": "Qt tools for viewing event content from shared memory.",
+    "operations": "Attach to the intended segment and verify source freshness before interpreting the display. Match record layout to the producer; visual inspection does not replace event consistency checks."
+  },
+  "EvtDispatcher_PatternGenerator": {
+    "group": "Simulation and examples",
+    "purpose": "Qt/shared-memory pattern producer used to exercise dispatching.",
+    "operations": "Write only to a dedicated test segment. Record pattern dimensions and rate and verify the expected sequence in the receiving viewer or dispatcher client."
+  },
+  "EvtDispatcher_Viewer": {
+    "group": "Analysis",
+    "purpose": "Legacy Qt shared-memory/event-dispatch viewer.",
+    "operations": "Select the correct memory source and validate the displayed pattern/event against its producer. Keep this viewer's protocol dependencies distinct from similarly named packaged clients."
+  },
+  "ExternalPackageTest": {
+    "group": "Simulation and examples",
+    "purpose": "Small checks demonstrating integration of external libraries such as Boost, CppUnit, and Xerces.",
+    "operations": "Build in the intended release environment to diagnose toolchain or external dependency failures. Passing these tests establishes basic linkage/use, not DAQ system readiness."
+  },
+  "FEBCheckoutVerify": {
+    "group": "Hardware",
+    "purpose": "FEB checkout verification and report tooling, including bundled Python imaging, XML, spreadsheet, and document libraries.",
+    "operations": "Use known device measurements and reference limits, preserve input results, and verify report device identity. The bundled third-party trees are legacy dependencies; this review focused on NOvA entry points rather than a complete upstream-library audit."
+  },
+  "FarDetectorPowerOn": {
+    "group": "Operations",
+    "purpose": "LaTeX recovery/power-on checklist and network validation helpers for the DAQ clusters.",
+    "operations": "The README scopes the checklist to trained experts. Review power, management hosts, storage, and network readiness in documented order. Build a printable PDF with make pdf where the historical TeX dependencies are available."
+  },
+  "FileTransferService": {
+    "group": "Storage and metadata",
+    "purpose": "Twisted service coordinating metadata, SAM transfers, archive bundling, retries, and cleanup of completed files.",
+    "operations": "Use the supported Python 2/Twisted/SAM environment. Monitor pending, completed, failed, and forgotten states; verify archive presence and CRC before deleting local data. Restart with the configuration and catalog state preserved, then reconcile rather than blindly resubmitting everything."
+  },
+  "HoughPoint.old": {
+    "group": "Analysis",
+    "purpose": "Legacy two-hit Hough-transform geometry representation.",
+    "operations": "Input hits must outlive the non-owning pointers in HoughPoint. Validate orientation, sign, and degenerate cases with analytic points before using the transform output. Confirm historical deployment before prioritizing this package."
+  },
+  "MetaDataTools": {
+    "group": "Storage and metadata",
+    "purpose": "Extracts run-level metadata and validates header information from raw DAQ files.",
+    "operations": "Compare generated detector/DCM/buffer-node lists and event counts to known inputs before catalog registration. Invalid raw input or metadata must not be silently promoted into the transfer catalog."
+  },
+  "MockDataDAQ": {
+    "group": "Simulation and examples",
+    "purpose": "Framework modules for simulated detector data, channel-map additions, and synthetic event timing.",
+    "operations": "Build with the matching framework and data formats. Fix seed/timing settings for repeatable tests and keep generated files labeled as simulation."
+  },
+  "NDLTest": {
+    "group": "Simulation and examples",
+    "purpose": "Alternative/test data logger with event pooling and run-stream output.",
+    "operations": "Use synthetic sources and temporary storage. Compare resulting run files to NovaDataLogger format expectations; do not infer interchangeability from shared class names."
+  },
+  "NOvABeam": {
+    "group": "Timing and triggers",
+    "purpose": "Beam bundle parsing and retrieval helpers, including XML and curl examples.",
+    "operations": "Check source availability, timestamps, and units before consuming beam data. Retain raw responses when diagnosing parsing failures; a successful HTTP exchange does not establish a valid beam record."
+  },
+  "NovaControlRoom": {
+    "group": "Operations",
+    "purpose": "Site- and workstation-specific desktop launchers, operator utilities, snapshots, and display setup.",
+    "operations": "Choose the correct detector and workstation directory. Validate target users/hosts and confirmations before remote commands. Existing local launcher changes were preserved; deployment paths embedded in scripts may require site verification."
+  },
+  "NovaDAQCheckout": {
+    "group": "Hardware",
+    "purpose": "DAQ hardware checkout orchestration and GUI for DCM, FEB, APD, and process checks.",
+    "operations": "Select a controlled hardware target and preserve the generated report/configuration. Verify which subprocess actually failed; do not continue commissioning based only on GUI startup."
+  },
+  "NovaDAQConfiguration": {
+    "group": "Control",
+    "purpose": "Configuration manager translating named/database settings and partition resources into per-application connection, hardware, and run XML.",
+    "operations": "Verify detector, partition, global configuration ID, generated-file location, and distribution status. Keep a coherent set of generated files and their database identifiers for rollback; mixing files from different generations can misconfigure a run."
+  },
+  "NovaDAQConventions": {
+    "group": "Core libraries",
+    "purpose": "Shared detector/subdetector identifiers, run types, and string conversion conventions.",
+    "operations": "Treat enum values and canonical names as compatibility-sensitive across messages, configuration, and metadata. Unknown values should remain distinguishable from valid detector selections."
+  },
+  "NovaDAQCrontab": {
+    "group": "Operations",
+    "purpose": "Parses DAQ/cron configuration and drives scheduled operational commands.",
+    "operations": "Review command definitions and scheduling context before installation. Match detector/partition environment and log destinations; verify exit codes and prevent overlapping operations that target the same DAQ process."
+  },
+  "NovaDAQLiveTimeMonitor": {
+    "group": "Monitoring",
+    "purpose": "Scrapes ShmRdWrShow statistics and Run Control resource state into livetime logs.",
+    "operations": "Requires the correct SHMRW_KEY, DAQ environment, and .prevRCResources.xml path. Verify active-node count and dropped-buffer units before interpreting livetime. Inspect source loop duration and process/PID handling before treating it as a persistent monitor."
+  },
+  "NovaDAQMonitor": {
+    "group": "Monitoring",
+    "purpose": "DAQ/cluster monitoring state machine, RRD thresholds, Ganglia integration, and monitoring scripts.",
+    "operations": "Match partition and expected participants, and check freshness of each upstream monitor. Distinguish unavailable input from an actual threshold violation. Preserve RRD/history files through restart and verify post-restart updates."
+  },
+  "NovaDAQMonitorClient": {
+    "group": "Monitoring",
+    "purpose": "Client library/service for publishing participant monitoring data to NovaDAQMonitor.",
+    "operations": "Keep participant identity and DDS destination consistent with the monitor configuration. Test periodic reporting, disconnect, and recovery after monitor restart; a connected client can still have stale metrics."
+  },
+  "NovaDAQMonitor_OLD": {
+    "group": "Monitoring",
+    "purpose": "Earlier DAQ monitor, RRD storage, thresholds, and state-manager tests.",
+    "operations": "Use the matching historical clients and RRD schema if reproducing behavior. Deployment is unconfirmed; compare the newer monitor before migrating retained history."
+  },
+  "NovaDAQTemplate": {
+    "group": "Simulation and examples",
+    "purpose": "C++/Python coding examples and package-layout/build templates.",
+    "operations": "Use as a starting point only after updating names, external dependencies, and build rules. Example behavior is not an operational service specification."
+  },
+  "NovaDAQTemplate_OLD": {
+    "group": "Simulation and examples",
+    "purpose": "Historical C++/Python package template and CppUnit examples.",
+    "operations": "Retain as a historical reference; verify modern compiler/runtime assumptions before copying it into a new package. Prefer current release build conventions."
+  },
+  "NovaDAQUtilities": {
+    "group": "Core libraries",
+    "purpose": "Shared process, cache, environment, location, partition, XML, time, and shared-memory conventions/utilities.",
+    "operations": "Changes have wide downstream reach. Validate process termination/exit status, URL/path resolution, and configuration caching with isolated processes and temporary files. A library update should be tested in representative control and data-path consumers."
+  },
+  "NovaDaqDcs": {
+    "group": "Monitoring",
+    "purpose": "EPICS IOCs, detector-control records/widgets, PV archivers, and control-room launch utilities.",
+    "operations": "Verify IOC identity, PV namespaces, recipe selection, and database destination. Separate read-only monitoring from setpoint/recipe changes; preserve known settings and confirm readback after authorized hardware changes."
+  },
+  "NovaDataLogger": {
+    "group": "Data path",
+    "purpose": "Receives selected event data, pools fragments, and writes versioned run/subrun streams to disk.",
+    "operations": "Before a run check output filesystem capacity, run identity, stream masks, and upstream connectivity. Monitor write errors and event completeness. Stop through Run Control and verify final headers/tails/file sizes before transfer."
+  },
+  "NovaDataLogger_OLD": {
+    "group": "Data path",
+    "purpose": "Earlier listener/event-manager data logger implementation.",
+    "operations": "Confirm deployed lineage before applying a fix. Validate old stream framing and file output against the corresponding event builder; preserve a compatible reader for historical data."
+  },
+  "NovaDatabase": {
+    "group": "Control",
+    "purpose": "Database table/row/column abstraction, CSV/SSV import-export tools, and schema scripts.",
+    "operations": "Choose development versus production connection explicitly and preserve schema/data backups before imports or alterations. Validate row counts, field types, and transaction outcomes with small staging samples."
+  },
+  "NovaEventBuilder": {
+    "group": "Data path",
+    "purpose": "NOvA-specific event assembly, selection, connection handling, and logger components layered on generic event building.",
+    "operations": "Match JumboHeader/SubFrame definitions to the sending client and run-control generation. Monitor incomplete events and downstream output; stop senders and drain buffers before shutdown."
+  },
+  "NovaEventBuilderClient": {
+    "group": "Data path",
+    "purpose": "DCM client, reader, generator, and dispatcher for the NOvA event-builder path.",
+    "operations": "Choose hardware versus generated data explicitly. Check /dev/dcm_data availability only in hardware mode, and verify framing/timestamps at the server in either mode. Preserve sender/server version alignment."
+  },
+  "NovaEventBuilderClient_OLD": {
+    "group": "Data path",
+    "purpose": "Historical NOvA DCM/event-builder client with generator tests.",
+    "operations": "Use only with the corresponding old server for reproduction until compatibility is established. Check simulated versus hardware initialization and descriptor ownership during shutdown."
+  },
+  "NovaEventBuilder_OLD": {
+    "group": "Data path",
+    "purpose": "Historical NOvA event builder and data-selector tests.",
+    "operations": "Validate retained clients, message definitions, and file format as a complete historical set. Confirm active use before allocating operational remediation effort."
+  },
+  "NovaFTS": {
+    "group": "Storage and metadata",
+    "purpose": "Site configuration, metadata plugins, credential/setup helpers, and container deployment files for file transfer.",
+    "operations": "Track the selected plugin/configuration and keep host and dd-03/dd-07 container copies consistent. Check credential lifetime, catalog registration, transfer backlog, and archive confirmation before local cleanup."
+  },
+  "NovaFileTransferSystem": {
+    "group": "Storage and metadata",
+    "purpose": "Earlier shell-based file discovery, copying, bundling, metadata, and transfer orchestration.",
+    "operations": "Review absolute source/destination paths and completion-marker semantics before reuse. Validate on temporary files; never equate a marker file or successful final echo with verified durable transfer."
+  },
+  "NovaFirmware": {
+    "group": "Hardware",
+    "purpose": "Versioned DCM, FEB, and TDU firmware images and associated configuration artifacts.",
+    "operations": "Select by board revision and validated release mapping, not newest filename. Record the exact image checksum and readback version before/after programming. Binary image storage can be inventoried but cannot substitute for RTL/source review."
+  },
+  "NovaGlobalTrigger": {
+    "group": "Timing and triggers",
+    "purpose": "Global trigger service implementing calibration, data-driven, beam, manual, long-window, and SNEWS trigger flows.",
+    "operations": "Match trigger masks/prescales, detector, partition, timebase, and input mailbox endpoints. Confirm trigger counters at the producer and buffer nodes. Change enabled triggers through the controlled run lifecycle with recorded configuration."
+  },
+  "NovaMessageDefinitions": {
+    "group": "Messaging",
+    "purpose": "Earlier RMS/XML message classes and message-registration constants.",
+    "operations": "Keep factory registration and serialization names consistent across peers. Compare against DAQMessages before changing an old client; the two packages represent different contract layers."
+  },
+  "NovaMessageLogger": {
+    "group": "Monitoring",
+    "purpose": "Status logger clients, listeners, and notification demonstrations using RMS.",
+    "operations": "Set the expected RMS destination and source application identity. Verify message receipt and persistence independently; demonstrations may require operational wrappers for long-running use."
+  },
+  "NovaPreSNShiftGUI": {
+    "group": "Monitoring",
+    "purpose": "GTK interface for monitoring a pre-supernova shift status file.",
+    "operations": "Set the monitored file path and check update freshness, permissions, and parsing behavior. Confirm the GUI's status reflects the producer's latest update, not merely a successfully opened file."
+  },
+  "NovaRemoteControlRooms": {
+    "group": "Operations",
+    "purpose": "Remote-control-room setup, SSH tunnels, gateway options, and one-button GUI helpers.",
+    "operations": "Check user credentials, gateway reachability, and local port collisions. Verify each tunnel's destination before opening operator displays; close obsolete tunnels when leaving the session."
+  },
+  "NovaResourceManager": {
+    "group": "Control",
+    "purpose": "Qt TCP resource manager with partition reservation, resource XML persistence, and GUI clients.",
+    "operations": "Source defaults are loopback and port 60890, overridable by NOVARSRCMGRHOST/NOVARSRCMGRPORT. Preserve resource files/backups and reconcile reservations before restart. Do not let two independent managers allocate the same hardware set."
+  },
+  "NovaResoureManager": {
+    "group": "Control",
+    "purpose": "Earlier, misspelled resource-manager package implementing RMS discovery/reserve/release handlers.",
+    "operations": "Keep its identity distinct from NovaResourceManager. Confirm historical deployment and contract compatibility before moving code or treating the spelling as an interchangeable alias."
+  },
+  "NovaRunControl": {
+    "group": "Control",
+    "purpose": "Run-control server, GUI/CLI clients, state machine, run configuration, and resource selection.",
+    "operations": "Establish resources, configure connections/hardware/run settings, and start/stop through the state machine. Require participant acknowledgements and record run/subrun IDs, configuration identity, and start/stop times. Preserve state/configuration logs when diagnosing transitions."
+  },
+  "NovaRunControlClient": {
+    "group": "Control",
+    "purpose": "RMS-based run-control and global-trigger receivers with shared message-client connection management.",
+    "operations": "Register the intended partition and application identity; validate callbacks, disconnect, and destruction across start/stop cycles. Consumers depend on reliable teardown and reconnection after control services restart."
+  },
+  "NovaRunControlClient_OLD": {
+    "group": "Control",
+    "purpose": "Historical Nova state-manager/client implementation.",
+    "operations": "Use its matching message definitions and state-transition semantics for reproduction. Verify current deployment before scheduling migration to the newer RMS client."
+  },
+  "NovaSNEWSInterface": {
+    "group": "Timing and triggers",
+    "purpose": "SNEWS sender, XML-RPC forwarder/receiver, and DDS bridge to the global trigger.",
+    "operations": "Configure receiving/forwarding ports, detector association, and DDS partition explicitly. Check subscription registration, message timestamp interpretation, and downstream trigger delivery using test messages in isolation."
+  },
+  "NovaSpillServer": {
+    "group": "Timing and triggers",
+    "purpose": "Beam-spill/TCR receiver, forwarder, XML-RPC/DDS bridge, and TDU timing utilities.",
+    "operations": "Verify spill source, receiver/forwarder registration, GPS/NOvA timestamp conversion, and destination partitions. Monitor last-spill age and disagreement with current time before enabling spill-driven triggering."
+  },
+  "NovaSuperNova": {
+    "group": "Timing and triggers",
+    "purpose": "Buffers hit-rate data, estimates background, processes candidate bursts, logs results, and sends supernova triggers.",
+    "operations": "Match binning/time ranges and input endpoints with producers. Monitor input gaps, buffer coverage, background readiness, and outgoing trigger counts. Validate thresholds against captured data in an isolated partition."
+  },
+  "NovaTimingUtilities": {
+    "group": "Core libraries",
+    "purpose": "Converts UNIX, GPS-related, and NOvA clock representations and provides a conversion CLI.",
+    "operations": "Keep epoch, 64 MHz tick interpretation, fractional-second precision, and leap-second handling consistent across consumers. Include threshold-boundary and round-trip cases when changing conversions."
+  },
+  "NovaWANMonitor": {
+    "group": "Monitoring",
+    "purpose": "Ping source/receiver and site-monitor GUI for WAN connectivity checks.",
+    "operations": "Set source/destination endpoints and expected cadence. Distinguish delayed/missing samples from server downtime; capture both endpoint logs when diagnosing latency changes."
+  },
+  "PackageVersion": {
+    "group": "Core libraries",
+    "purpose": "Parses embedded package revision information and exposes version helper functions/macros.",
+    "operations": "CVS-derived version strings are historical metadata. Record Git commit IDs alongside reported versions for reproducibility; verify malformed and missing revision handling before using values for compatibility decisions."
+  },
+  "PedestalAnalysis_Scripts": {
+    "group": "Analysis",
+    "purpose": "ROOT/C++ pedestal, DSO, FFT, and plotting macros and orchestration scripts.",
+    "operations": "Record raw input, channel/scan selection, calibration settings, and output directory. Verify macros compile/load with the intended ROOT version and compare plots with a known reference before deriving thresholds."
+  },
+  "PedestalDataRunner": {
+    "group": "Hardware",
+    "purpose": "GUI/CLI DSO acquisition, selection, reprocessing, and pedestal-analysis workflow.",
+    "operations": "Choose detector/DCMs and acquisition settings explicitly, check output paths, and avoid overlapping hardware readout. Preserve raw DSO input separately from derived plots/thresholds and verify configuration before applying results."
+  },
+  "PixelMaskTool": {
+    "group": "Control",
+    "purpose": "Interface/tool for creating or updating pixel masks through the DAQ configuration layer.",
+    "operations": "Confirm detector and source configuration, inspect changed channels, and keep a previous mask/configuration for rollback. Validate mask bounds and representation before activating it in a run."
+  },
+  "PowerUtilities": {
+    "group": "Operations",
+    "purpose": "Detector power-supply, PDU, load-shedding, and power sequencing scripts.",
+    "operations": "Validate detector/diblock/channel inputs and target inventory before any write. Confirm readback and sequence using the expert power checklist. These scripts alter physical equipment; review and test changes with command stubs first."
+  },
+  "RawFileParser": {
+    "group": "Core libraries",
+    "purpose": "Memory-mapped and file-I/O reader/indexer for NOvA run and event files.",
+    "operations": "Open immutable completed files or controlled copies. Validate malformed markers, truncated records, event indices, and end-of-file progress; every search must terminate. It is a shared dependency of metadata and inspection tools."
+  },
+  "ResponsiveMessagingSystem": {
+    "group": "Messaging",
+    "purpose": "RMS producers/consumers, message/destination/status abstractions, DDS/EPICS/local providers, and XML support.",
+    "operations": "Select one compatible provider/configuration and consistent destination/partition names. Monitor request/reply timeouts and test stale replies, fragmented messages, listener removal, and shutdown under load."
+  },
+  "RootDAQTemplate": {
+    "group": "Simulation and examples",
+    "purpose": "Minimal ROOT-integrated online class and dictionary example.",
+    "operations": "Build with the intended ROOT dictionary generator and ABI. Use it to validate integration before adding application code; it has no standalone service lifecycle."
+  },
+  "RunControlClient": {
+    "group": "Control",
+    "purpose": "Generic older run-control state manager and state-change listener.",
+    "operations": "Match the controller's state transitions and message schema. Test repeated transitions, listener lifetime, and disconnect behavior when reusing it with historical event builders."
+  },
+  "RunControlClient_OLD": {
+    "group": "Control",
+    "purpose": "Earlier generic run-control client with state-manager/listener tests.",
+    "operations": "Treat this as a distinct historical contract and verify deployment before migration. Preserve the accompanying tests as reference for expected legacy behavior."
+  },
+  "RunCoord": {
+    "group": "Analysis",
+    "purpose": "Run-coordination scripts for active/filled detector channels, POT, uptime, duration, and run lists.",
+    "operations": "Verify database/source selection, date windows, detector, and units. Preserve query inputs and distinguish missing records from zero uptime or exposure when publishing coordination plots."
+  },
+  "RunSummaryUtils": {
+    "group": "Analysis",
+    "purpose": "Raw-file summary and trigger-count/timing tools plus FEB link-error extraction and ROOT macros.",
+    "operations": "Use captured completed runs and reconcile summary totals with raw headers and known events. Check initial/empty-event cases and detector mapping before interpreting histogram or link-error output."
+  },
+  "SHM_Utilities": {
+    "group": "Data path",
+    "purpose": "Utilities copying files/patterns to shared memory, dumping memory, and inspecting spill history.",
+    "operations": "Verify segment key, size, writer ownership, and record layout before access. FileToSHM/PatternToSHM are writers and belong on isolated segments for tests. Use dump/spy tools for inspection without replacing a live producer."
+  },
+  "SRT_ONLINE": {
+    "group": "Build and release",
+    "purpose": "SoftRelTools make fragments and release-building scripts used across the online packages.",
+    "operations": "Set the intended SRT public/private contexts and external product versions before building. Most sibling GNUmakefiles depend on these fragments; individual repositories are not necessarily standalone builds."
+  },
+  "ShmMilliBlock": {
+    "group": "Data path",
+    "purpose": "Shared-memory wrapper for milliblock publication/consumption.",
+    "operations": "Keep buffer sizes, segment identity, producer format, and reader sequencing aligned. Test wraparound and slow-reader behavior with isolated segments before changing online buffering."
+  },
+  "ShmRdWr": {
+    "group": "Data path",
+    "purpose": "Shared-memory ring transport with grouped readers, semaphores, overwrite tracking, and inspection utilities.",
+    "operations": "Match segment key/geometry and reader group IDs. Monitor overwrite counts and reader lag, and coordinate all owners before deleting or recreating a segment. Group-read semaphore behavior matters during stop/drain."
+  },
+  "TDUControl": {
+    "group": "Timing and triggers",
+    "purpose": "Qt timing-control server/client, arm/register commands, synchronization, delay, GPS, and error monitoring.",
+    "operations": "Confirm TDU endpoint, firmware/register map, partition, and timing source. Record synchronization/delay state before changes; verify readback and detector timing before resuming triggers."
+  },
+  "TDUControlClient": {
+    "group": "Timing and triggers",
+    "purpose": "Standalone Qt client for timing control.",
+    "operations": "Configure the intended host/tunnel and port and check live register/status readback. Treat synchronization and control actions as hardware mutations requiring the site's run-state procedure."
+  },
+  "TDUUtilities": {
+    "group": "Timing and triggers",
+    "purpose": "TDU register/diagnostic commands and loading/validation of timing-delay constants.",
+    "operations": "Use the correct hardware interface and calibration database/file. Validate constants and record previous values before loading. Destructive register diagnostics require a dedicated test TDU."
+  },
+  "TDUWeb": {
+    "group": "Timing and triggers",
+    "purpose": "Bottle HTTP wrapper around TDU status, timing-control, spill-history, and TCR commands.",
+    "operations": "The source binds port 8080 on all interfaces. Status endpoints invoke local tools; mutation endpoints change hardware. Review the authentication finding before exposing this service to clients."
+  },
+  "Trace": {
+    "group": "Monitoring",
+    "purpose": "Trace logging support and Qt trace-manager application.",
+    "operations": "Select trace levels and destinations deliberately; high-volume trace can affect throughput and disk use. Verify that changing verbosity reaches the intended process and restore normal levels after diagnosis."
+  },
+  "TriggerScalars": {
+    "group": "Monitoring",
+    "purpose": "Qt trigger scalar displays, listener/examiner threads, and visual counter widgets.",
+    "operations": "Match trigger definitions and mailbox/partition selection. Check update freshness, count resets, and rate calculation interval; a frozen display is not evidence that triggers stopped."
+  },
+  "XmlRpc": {
+    "group": "Messaging",
+    "purpose": "XML-RPC client/server, HTTP/socket dispatch, value serialization, and sample applications.",
+    "operations": "Consumers must validate method arguments and define their authentication/network boundary. Test partial HTTP messages, disconnects, oversized bodies, and fault responses using a local server before online integration."
+  },
+  "benchmarks": {
+    "group": "Simulation and examples",
+    "purpose": "Memory bandwidth, bit-reversal, stream, and memory-test programs with plotting helpers.",
+    "operations": "Run on an isolated node because tests consume CPU/memory bandwidth and may allocate large buffers. Record architecture, compiler options, memory size, and workload to make results comparable."
+  },
+  "dcm_kernel_module": {
+    "group": "Hardware",
+    "purpose": "DCM Linux driver for control/status/data devices, FPGA access, DMA, and board utilities.",
+    "operations": "Build against the exact target kernel/configuration and verify device permissions and register maps. Preserve loaded-module/firmware versions; driver replacement requires stopping device consumers and a tested rollback path."
+  },
+  "dcm_linux_system": {
+    "group": "Hardware",
+    "purpose": "Instructions, patches, and source archives for rebuilding the DCM PowerPC toolchain and Linux userspace.",
+    "operations": "Use kernel_xcompiler.html and the supplied patch versions as historical reconstruction inputs. Validate modern host compatibility in an isolated build environment; archives were inventoried, not treated as fully reviewed source."
+  },
+  "linux_kernel_dcmtdu": {
+    "group": "Hardware",
+    "purpose": "Full historical Linux kernel tree used for DCM/TDU platforms.",
+    "operations": "Match PowerPC board configuration, device tree, bootloader, root filesystem, and external modules. Review here sampled integration/build surfaces; it is not an exhaustive kernel security audit or a claim of current upstream support."
+  },
+  "nova_gcn_trigger": {
+    "group": "Timing and triggers",
+    "purpose": "C program bridging external GCN notices into the NOvA trigger workflow.",
+    "operations": "Validate notice type, timestamp, destination, and reconnection behavior against recorded notices on an isolated endpoint. External notices must be distinguishable from local test messages."
+  },
+  "setup": {
+    "group": "Build and release",
+    "purpose": "Release/package manifests and SRT/UPS setup scripts for online environments.",
+    "operations": "Select a coherent release manifest and architecture/qualifier. Source the matching shell variant in a fresh environment, verify resolved paths/product versions, and preserve the prior release selection for rollback."
+  },
+  "tdu_kernel_module": {
+    "group": "Hardware",
+    "purpose": "TDU Linux module with register/data operations, timing work, and driver documentation.",
+    "operations": "Build with the target kernel and confirm hardware/firmware compatibility. Review actual enabled workqueue behavior, device access permissions, and readback before timing tests. No module loading or board programming was performed during review."
+  },
+  "ups": {
+    "group": "Build and release",
+    "purpose": "UPS product dependencies and scripts for building, bootstrapping, tagging, and packaging novadaq.",
+    "operations": "Use product_deps as the declared external dependency/qualifier source; the snapshot names novadaq v18_00_00 and e19. Resolve the complete release source layout before invoking build scripts and retain build logs/artifacts for rollback."
+  }
+}

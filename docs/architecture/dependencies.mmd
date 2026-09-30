@@ -1,0 +1,449 @@
+flowchart LR
+  p0["AshRiver"]
+  p1["BufferNodeEVB"]
+  p2["ChannelDecoder"]
+  p3["DAQApplicationManager"]
+  p4["DAQChannelMap"]
+  p5["DAQClusterUtils"]
+  p6["DAQDataFormats"]
+  p7["DAQHit.old"]
+  p8["DAQMessages"]
+  p9["DAQMessagesZMQ"]
+  p10["DAQNetworkUtils"]
+  p11["DAQOperationsTools"]
+  p12["DAQQualityCheck"]
+  p13["DAQSimulationManager"]
+  p14["DCMApplication"]
+  p15["DCMBootLoader"]
+  p16["DCMGuiTools"]
+  p17["DCM_ProgUtils"]
+  p18["DCMulator"]
+  p19["DDSSimD"]
+  p20["DDTManager"]
+  p21["Dashboard"]
+  p22["DataConcentratorModule"]
+  p23["DatabaseUtils"]
+  p24["DetectorPlotter"]
+  p25["DispatcherClient"]
+  p26["DispatcherClientExampleApp"]
+  p27["EpicsProviderForMessaging"]
+  p28["ErrorHandler"]
+  p29["EventBuilder"]
+  p30["EventBuilderClient"]
+  p31["EventBuilderClient_OLD"]
+  p32["EventBuilder_OLD"]
+  p33["EventDispatcher"]
+  p34["EventDispatcher_Client"]
+  p35["EventDispatcher_CommandSet"]
+  p36["EventDispatcher_Server"]
+  p37["EventDispatcher_Server_FMWK"]
+  p38["EventDump"]
+  p39["EventMemoryViewer"]
+  p40["EvtDispatcher_PatternGenerator"]
+  p41["EvtDispatcher_Viewer"]
+  p42["ExternalPackageTest"]
+  p43["FEBCheckoutVerify"]
+  p44["FarDetectorPowerOn"]
+  p45["FileTransferService"]
+  p46["HoughPoint.old"]
+  p47["MetaDataTools"]
+  p48["MockDataDAQ"]
+  p49["NDLTest"]
+  p50["NOvABeam"]
+  p51["NovaControlRoom"]
+  p52["NovaDAQCheckout"]
+  p53["NovaDAQConfiguration"]
+  p54["NovaDAQConventions"]
+  p55["NovaDAQCrontab"]
+  p56["NovaDAQLiveTimeMonitor"]
+  p57["NovaDAQMonitor"]
+  p58["NovaDAQMonitorClient"]
+  p59["NovaDAQMonitor_OLD"]
+  p60["NovaDAQTemplate"]
+  p61["NovaDAQTemplate_OLD"]
+  p62["NovaDAQUtilities"]
+  p63["NovaDaqDcs"]
+  p64["NovaDataLogger"]
+  p65["NovaDataLogger_OLD"]
+  p66["NovaDatabase"]
+  p67["NovaEventBuilder"]
+  p68["NovaEventBuilderClient"]
+  p69["NovaEventBuilderClient_OLD"]
+  p70["NovaEventBuilder_OLD"]
+  p71["NovaFTS"]
+  p72["NovaFileTransferSystem"]
+  p73["NovaFirmware"]
+  p74["NovaGlobalTrigger"]
+  p75["NovaMessageDefinitions"]
+  p76["NovaMessageLogger"]
+  p77["NovaPreSNShiftGUI"]
+  p78["NovaRemoteControlRooms"]
+  p79["NovaResourceManager"]
+  p80["NovaResoureManager"]
+  p81["NovaRunControl"]
+  p82["NovaRunControlClient"]
+  p83["NovaRunControlClient_OLD"]
+  p84["NovaSNEWSInterface"]
+  p85["NovaSpillServer"]
+  p86["NovaSuperNova"]
+  p87["NovaTimingUtilities"]
+  p88["NovaWANMonitor"]
+  p89["PackageVersion"]
+  p90["PedestalAnalysis_Scripts"]
+  p91["PedestalDataRunner"]
+  p92["PixelMaskTool"]
+  p93["PowerUtilities"]
+  p94["RawFileParser"]
+  p95["ResponsiveMessagingSystem"]
+  p96["RootDAQTemplate"]
+  p97["RunControlClient"]
+  p98["RunControlClient_OLD"]
+  p99["RunCoord"]
+  p100["RunSummaryUtils"]
+  p101["SHM_Utilities"]
+  p102["SRT_ONLINE"]
+  p103["ShmMilliBlock"]
+  p104["ShmRdWr"]
+  p105["TDUControl"]
+  p106["TDUControlClient"]
+  p107["TDUUtilities"]
+  p108["TDUWeb"]
+  p109["Trace"]
+  p110["TriggerScalars"]
+  p111["XmlRpc"]
+  p112["benchmarks"]
+  p113["dcm_kernel_module"]
+  p114["dcm_linux_system"]
+  p115["linux_kernel_dcmtdu"]
+  p116["nova_gcn_trigger"]
+  p117["setup"]
+  p118["tdu_kernel_module"]
+  p119["ups"]
+  p1 --> p6
+  p1 --> p8
+  p1 --> p53
+  p1 --> p58
+  p1 --> p82
+  p1 --> p87
+  p1 --> p95
+  p1 --> p104
+  p1 --> p109
+  p2 --> p4
+  p2 --> p89
+  p3 --> p1
+  p3 --> p8
+  p3 --> p11
+  p3 --> p23
+  p3 --> p62
+  p3 --> p79
+  p3 --> p82
+  p3 --> p95
+  p3 --> p109
+  p4 --> p54
+  p6 --> p89
+  p7 --> p4
+  p7 --> p6
+  p7 --> p87
+  p7 --> p94
+  p7 --> p103
+  p8 --> p95
+  p9 --> p6
+  p9 --> p54
+  p11 --> p62
+  p12 --> p6
+  p13 --> p1
+  p13 --> p6
+  p13 --> p8
+  p13 --> p62
+  p13 --> p82
+  p13 --> p87
+  p13 --> p89
+  p13 --> p95
+  p13 --> p109
+  p14 --> p6
+  p14 --> p8
+  p14 --> p17
+  p14 --> p30
+  p14 --> p58
+  p14 --> p62
+  p14 --> p82
+  p14 --> p87
+  p14 --> p95
+  p14 --> p109
+  p14 --> p113
+  p16 --> p17
+  p16 --> p89
+  p16 --> p109
+  p17 --> p6
+  p17 --> p87
+  p17 --> p109
+  p17 --> p113
+  p20 --> p8
+  p20 --> p11
+  p20 --> p23
+  p20 --> p62
+  p20 --> p79
+  p20 --> p82
+  p20 --> p95
+  p23 --> p54
+  p23 --> p62
+  p23 --> p66
+  p24 --> p54
+  p24 --> p62
+  p24 --> p66
+  p25 --> p6
+  p25 --> p12
+  p28 --> p8
+  p28 --> p82
+  p28 --> p87
+  p28 --> p95
+  p29 --> p62
+  p29 --> p97
+  p30 --> p6
+  p31 --> p29
+  p31 --> p30
+  p31 --> p97
+  p32 --> p29
+  p32 --> p95
+  p32 --> p97
+  p34 --> p35
+  p36 --> p6
+  p36 --> p35
+  p36 --> p89
+  p37 --> p6
+  p37 --> p89
+  p38 --> p6
+  p38 --> p87
+  p38 --> p94
+  p39 --> p6
+  p39 --> p89
+  p40 --> p6
+  p41 --> p6
+  p42 --> p62
+  p43 --> p4
+  p43 --> p89
+  p46 --> p4
+  p46 --> p7
+  p47 --> p6
+  p47 --> p87
+  p47 --> p94
+  p48 --> p4
+  p48 --> p6
+  p48 --> p12
+  p49 --> p1
+  p49 --> p6
+  p49 --> p8
+  p49 --> p53
+  p49 --> p54
+  p49 --> p58
+  p49 --> p62
+  p49 --> p82
+  p49 --> p95
+  p49 --> p109
+  p50 --> p62
+  p52 --> p4
+  p52 --> p6
+  p52 --> p54
+  p52 --> p62
+  p52 --> p66
+  p52 --> p89
+  p52 --> p91
+  p53 --> p3
+  p53 --> p6
+  p53 --> p8
+  p53 --> p13
+  p53 --> p14
+  p53 --> p23
+  p53 --> p57
+  p53 --> p62
+  p53 --> p66
+  p53 --> p74
+  p53 --> p79
+  p53 --> p82
+  p53 --> p95
+  p55 --> p62
+  p55 --> p89
+  p55 --> p91
+  p56 --> p104
+  p57 --> p8
+  p57 --> p62
+  p57 --> p79
+  p57 --> p82
+  p57 --> p87
+  p58 --> p62
+  p59 --> p57
+  p59 --> p95
+  p59 --> p97
+  p61 --> p60
+  p62 --> p6
+  p63 --> p17
+  p63 --> p53
+  p63 --> p62
+  p63 --> p66
+  p63 --> p109
+  p64 --> p1
+  p64 --> p6
+  p64 --> p8
+  p64 --> p53
+  p64 --> p54
+  p64 --> p58
+  p64 --> p62
+  p64 --> p74
+  p64 --> p82
+  p64 --> p95
+  p64 --> p109
+  p65 --> p29
+  p65 --> p64
+  p65 --> p67
+  p65 --> p68
+  p65 --> p82
+  p65 --> p95
+  p65 --> p97
+  p66 --> p54
+  p66 --> p62
+  p67 --> p29
+  p67 --> p30
+  p67 --> p62
+  p67 --> p68
+  p67 --> p82
+  p67 --> p95
+  p67 --> p97
+  p68 --> p29
+  p68 --> p30
+  p68 --> p62
+  p68 --> p67
+  p68 --> p82
+  p68 --> p95
+  p68 --> p97
+  p69 --> p29
+  p69 --> p30
+  p69 --> p67
+  p69 --> p68
+  p69 --> p95
+  p70 --> p29
+  p70 --> p30
+  p70 --> p67
+  p70 --> p68
+  p70 --> p82
+  p70 --> p95
+  p70 --> p97
+  p74 --> p6
+  p74 --> p8
+  p74 --> p9
+  p74 --> p58
+  p74 --> p62
+  p74 --> p82
+  p74 --> p84
+  p74 --> p85
+  p74 --> p86
+  p74 --> p87
+  p74 --> p95
+  p75 --> p95
+  p79 --> p8
+  p79 --> p10
+  p79 --> p54
+  p79 --> p62
+  p79 --> p81
+  p79 --> p95
+  p80 --> p8
+  p80 --> p62
+  p80 --> p79
+  p80 --> p82
+  p80 --> p95
+  p81 --> p1
+  p81 --> p6
+  p81 --> p8
+  p81 --> p10
+  p81 --> p13
+  p81 --> p23
+  p81 --> p54
+  p81 --> p58
+  p81 --> p62
+  p81 --> p66
+  p81 --> p74
+  p81 --> p79
+  p81 --> p87
+  p81 --> p89
+  p81 --> p95
+  p81 --> p109
+  p82 --> p8
+  p82 --> p62
+  p82 --> p95
+  p83 --> p82
+  p83 --> p95
+  p83 --> p97
+  p84 --> p8
+  p84 --> p62
+  p84 --> p87
+  p84 --> p95
+  p84 --> p111
+  p85 --> p8
+  p85 --> p62
+  p85 --> p87
+  p85 --> p95
+  p85 --> p107
+  p85 --> p111
+  p86 --> p6
+  p86 --> p8
+  p86 --> p9
+  p86 --> p54
+  p86 --> p87
+  p86 --> p95
+  p91 --> p4
+  p91 --> p54
+  p91 --> p62
+  p91 --> p81
+  p91 --> p89
+  p91 --> p109
+  p92 --> p89
+  p94 --> p6
+  p95 --> p62
+  p98 --> p97
+  p100 --> p4
+  p100 --> p6
+  p100 --> p87
+  p100 --> p94
+  p101 --> p6
+  p101 --> p85
+  p101 --> p87
+  p101 --> p89
+  p101 --> p94
+  p102 --> p8
+  p102 --> p19
+  p102 --> p58
+  p102 --> p62
+  p102 --> p66
+  p102 --> p82
+  p102 --> p89
+  p102 --> p95
+  p102 --> p111
+  p103 --> p6
+  p103 --> p104
+  p104 --> p87
+  p105 --> p8
+  p105 --> p10
+  p105 --> p23
+  p105 --> p62
+  p105 --> p66
+  p105 --> p82
+  p105 --> p87
+  p105 --> p89
+  p105 --> p95
+  p107 --> p8
+  p107 --> p10
+  p107 --> p23
+  p107 --> p62
+  p107 --> p66
+  p107 --> p87
+  p107 --> p95
+  p107 --> p105
+  p107 --> p109
+  p107 --> p118
+  p108 --> p85
+  p108 --> p101
+  p108 --> p107
+  p110 --> p6
+  p110 --> p8
+  p110 --> p87
+  p110 --> p89
+  p110 --> p95

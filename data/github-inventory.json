@@ -1,0 +1,2042 @@
+[
+  {
+    "name": "AshRiver",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - AshRiver. Split from novaexperiment/novadaq pkgs/AshRiver with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "BufferNodeEVB",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - BufferNodeEVB. Split from novaexperiment/novadaq pkgs/BufferNodeEVB with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ChannelDecoder",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ChannelDecoder. Split from novaexperiment/novadaq pkgs/ChannelDecoder with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQApplicationManager",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQApplicationManager. Split from novaexperiment/novadaq pkgs/DAQApplicationManager with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQChannelMap",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQChannelMap. Split from novaexperiment/novadaq pkgs/DAQChannelMap with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQClusterUtils",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQClusterUtils. Split from novaexperiment/novadaq pkgs/DAQClusterUtils with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQDataFormats",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQDataFormats. Split from novaexperiment/novadaq pkgs/DAQDataFormats with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQHit.old",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQHit.old. Split from novaexperiment/novadaq pkgs/DAQHit.old with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQMessages",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQMessages. Split from novaexperiment/novadaq pkgs/DAQMessages with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQMessagesZMQ",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQMessagesZMQ. Split from novaexperiment/novadaq pkgs/DAQMessagesZMQ with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQNetworkUtils",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQNetworkUtils. Split from novaexperiment/novadaq pkgs/DAQNetworkUtils with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQOperationsTools",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQOperationsTools. Split from novaexperiment/novadaq pkgs/DAQOperationsTools with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQQualityCheck",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQQualityCheck. Split from novaexperiment/novadaq pkgs/DAQQualityCheck with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DAQSimulationManager",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DAQSimulationManager. Split from novaexperiment/novadaq pkgs/DAQSimulationManager with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DCMApplication",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DCMApplication. Split from novaexperiment/novadaq pkgs/DCMApplication with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DCMBootLoader",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DCMBootLoader. Split from novaexperiment/novadaq pkgs/DCMBootLoader with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DCMGuiTools",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DCMGuiTools. Split from novaexperiment/novadaq pkgs/DCMGuiTools with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DCM_ProgUtils",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DCM_ProgUtils. Split from novaexperiment/novadaq pkgs/DCM_ProgUtils with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DCMulator",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DCMulator. Split from novaexperiment/novadaq pkgs/DCMulator with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DDSSimD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DDSSimD. Split from novaexperiment/novadaq pkgs/DDSSimD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DDTManager",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DDTManager. Split from novaexperiment/novadaq pkgs/DDTManager with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "Dashboard",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - Dashboard. Split from novaexperiment/novadaq pkgs/Dashboard with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DataConcentratorModule",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DataConcentratorModule. Split from novaexperiment/novadaq pkgs/DataConcentratorModule with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DatabaseUtils",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DatabaseUtils. Split from novaexperiment/novadaq pkgs/DatabaseUtils with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DetectorPlotter",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DetectorPlotter. Split from novaexperiment/novadaq pkgs/DetectorPlotter with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DispatcherClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DispatcherClient. Split from novaexperiment/novadaq pkgs/DispatcherClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "DispatcherClientExampleApp",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - DispatcherClientExampleApp. Split from novaexperiment/novadaq pkgs/DispatcherClientExampleApp with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EpicsProviderForMessaging",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EpicsProviderForMessaging. Split from novaexperiment/novadaq pkgs/EpicsProviderForMessaging with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ErrorHandler",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ErrorHandler. Split from novaexperiment/novadaq pkgs/ErrorHandler with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventBuilder",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventBuilder. Split from novaexperiment/novadaq pkgs/EventBuilder with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventBuilderClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventBuilderClient. Split from novaexperiment/novadaq pkgs/EventBuilderClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventBuilderClient_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventBuilderClient_OLD. Split from novaexperiment/novadaq pkgs/EventBuilderClient_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventBuilder_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventBuilder_OLD. Split from novaexperiment/novadaq pkgs/EventBuilder_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDispatcher",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDispatcher. Split from novaexperiment/novadaq pkgs/EventDispatcher with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDispatcher_Client",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDispatcher_Client. Split from novaexperiment/novadaq pkgs/EventDispatcher_Client with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDispatcher_CommandSet",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDispatcher_CommandSet. Split from novaexperiment/novadaq pkgs/EventDispatcher_CommandSet with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDispatcher_Server",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDispatcher_Server. Split from novaexperiment/novadaq pkgs/EventDispatcher_Server with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDispatcher_Server_FMWK",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDispatcher_Server_FMWK. Split from novaexperiment/novadaq pkgs/EventDispatcher_Server_FMWK with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventDump",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventDump. Split from novaexperiment/novadaq pkgs/EventDump with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EventMemoryViewer",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EventMemoryViewer. Split from novaexperiment/novadaq pkgs/EventMemoryViewer with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EvtDispatcher_PatternGenerator",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EvtDispatcher_PatternGenerator. Split from novaexperiment/novadaq pkgs/EvtDispatcher_PatternGenerator with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "EvtDispatcher_Viewer",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - EvtDispatcher_Viewer. Split from novaexperiment/novadaq pkgs/EvtDispatcher_Viewer with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ExternalPackageTest",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ExternalPackageTest. Split from novaexperiment/novadaq pkgs/ExternalPackageTest with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "FEBCheckoutVerify",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - FEBCheckoutVerify. Split from novaexperiment/novadaq pkgs/FEBCheckoutVerify with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "FarDetectorPowerOn",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - FarDetectorPowerOn. Split from novaexperiment/novadaq pkgs/FarDetectorPowerOn with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "FileTransferService",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - FileTransferService. Split from novaexperiment/novadaq pkgs/FileTransferService with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "HoughPoint.old",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - HoughPoint.old. Split from novaexperiment/novadaq pkgs/HoughPoint.old with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "MetaDataTools",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - MetaDataTools. Split from novaexperiment/novadaq pkgs/MetaDataTools with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "MockDataDAQ",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - MockDataDAQ. Split from novaexperiment/novadaq pkgs/MockDataDAQ with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NDLTest",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NDLTest. Split from novaexperiment/novadaq pkgs/NDLTest with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NOvABeam",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NOvABeam. Split from novaexperiment/novadaq pkgs/NOvABeam with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaControlRoom",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaControlRoom. Split from novaexperiment/novadaq pkgs/NovaControlRoom with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQCheckout",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQCheckout. Split from novaexperiment/novadaq pkgs/NovaDAQCheckout with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQConfiguration",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQConfiguration. Split from novaexperiment/novadaq pkgs/NovaDAQConfiguration with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQConventions",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQConventions. Split from novaexperiment/novadaq pkgs/NovaDAQConventions with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQCrontab",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQCrontab. Split from novaexperiment/novadaq pkgs/NovaDAQCrontab with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQLiveTimeMonitor",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQLiveTimeMonitor. Split from novaexperiment/novadaq pkgs/NovaDAQLiveTimeMonitor with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQMonitor",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQMonitor. Split from novaexperiment/novadaq pkgs/NovaDAQMonitor with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQMonitorClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQMonitorClient. Split from novaexperiment/novadaq pkgs/NovaDAQMonitorClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQMonitor_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQMonitor_OLD. Split from novaexperiment/novadaq pkgs/NovaDAQMonitor_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQTemplate",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQTemplate. Split from novaexperiment/novadaq pkgs/NovaDAQTemplate with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQTemplate_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQTemplate_OLD. Split from novaexperiment/novadaq pkgs/NovaDAQTemplate_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDAQUtilities",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDAQUtilities. Split from novaexperiment/novadaq pkgs/NovaDAQUtilities with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDaqDcs",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDaqDcs. Split from novaexperiment/novadaq pkgs/NovaDaqDcs with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDataLogger",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDataLogger. Split from novaexperiment/novadaq pkgs/NovaDataLogger with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDataLogger_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDataLogger_OLD. Split from novaexperiment/novadaq pkgs/NovaDataLogger_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaDatabase",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaDatabase. Split from novaexperiment/novadaq pkgs/NovaDatabase with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaEventBuilder",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaEventBuilder. Split from novaexperiment/novadaq pkgs/NovaEventBuilder with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaEventBuilderClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaEventBuilderClient. Split from novaexperiment/novadaq pkgs/NovaEventBuilderClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaEventBuilderClient_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaEventBuilderClient_OLD. Split from novaexperiment/novadaq pkgs/NovaEventBuilderClient_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaEventBuilder_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaEventBuilder_OLD. Split from novaexperiment/novadaq pkgs/NovaEventBuilder_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaFTS",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaFTS. Split from novaexperiment/novadaq pkgs/NovaFTS with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaFileTransferSystem",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaFileTransferSystem. Split from novaexperiment/novadaq pkgs/NovaFileTransferSystem with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaFirmware",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaFirmware. Split from novaexperiment/novadaq pkgs/NovaFirmware with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaGlobalTrigger",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaGlobalTrigger. Split from novaexperiment/novadaq pkgs/NovaGlobalTrigger with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaMessageDefinitions",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaMessageDefinitions. Split from novaexperiment/novadaq pkgs/NovaMessageDefinitions with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaMessageLogger",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaMessageLogger. Split from novaexperiment/novadaq pkgs/NovaMessageLogger with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaPreSNShiftGUI",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaPreSNShiftGUI. Split from novaexperiment/novadaq pkgs/NovaPreSNShiftGUI with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaRemoteControlRooms",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaRemoteControlRooms. Split from novaexperiment/novadaq pkgs/NovaRemoteControlRooms with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaResourceManager",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaResourceManager. Split from novaexperiment/novadaq pkgs/NovaResourceManager with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaResoureManager",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaResoureManager. Split from novaexperiment/novadaq pkgs/NovaResoureManager with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaRunControl",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaRunControl. Split from novaexperiment/novadaq pkgs/NovaRunControl with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaRunControlClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaRunControlClient. Split from novaexperiment/novadaq pkgs/NovaRunControlClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaRunControlClient_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaRunControlClient_OLD. Split from novaexperiment/novadaq pkgs/NovaRunControlClient_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaSNEWSInterface",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaSNEWSInterface. Split from novaexperiment/novadaq pkgs/NovaSNEWSInterface with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaSpillServer",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaSpillServer. Split from novaexperiment/novadaq pkgs/NovaSpillServer with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaSuperNova",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaSuperNova. Split from novaexperiment/novadaq pkgs/NovaSuperNova with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaTimingUtilities",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaTimingUtilities. Split from novaexperiment/novadaq pkgs/NovaTimingUtilities with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "NovaWANMonitor",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - NovaWANMonitor. Split from novaexperiment/novadaq pkgs/NovaWANMonitor with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "PackageVersion",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - PackageVersion. Split from novaexperiment/novadaq pkgs/PackageVersion with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "PedestalAnalysis_Scripts",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - PedestalAnalysis_Scripts. Split from novaexperiment/novadaq pkgs/PedestalAnalysis_Scripts with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "PedestalDataRunner",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - PedestalDataRunner. Split from novaexperiment/novadaq pkgs/PedestalDataRunner with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "PixelMaskTool",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - PixelMaskTool. Split from novaexperiment/novadaq pkgs/PixelMaskTool with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "PowerUtilities",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - PowerUtilities. Split from novaexperiment/novadaq pkgs/PowerUtilities with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RawFileParser",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RawFileParser. Split from novaexperiment/novadaq pkgs/RawFileParser with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ResponsiveMessagingSystem",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ResponsiveMessagingSystem. Split from novaexperiment/novadaq pkgs/ResponsiveMessagingSystem with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RootDAQTemplate",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RootDAQTemplate. Split from novaexperiment/novadaq pkgs/RootDAQTemplate with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RunControlClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RunControlClient. Split from novaexperiment/novadaq pkgs/RunControlClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RunControlClient_OLD",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RunControlClient_OLD. Split from novaexperiment/novadaq pkgs/RunControlClient_OLD with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RunCoord",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RunCoord. Split from novaexperiment/novadaq pkgs/RunCoord with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "RunSummaryUtils",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - RunSummaryUtils. Split from novaexperiment/novadaq pkgs/RunSummaryUtils with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "SHM_Utilities",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - SHM_Utilities. Split from novaexperiment/novadaq pkgs/SHM_Utilities with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "SRT_ONLINE",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - SRT_ONLINE. Split from novaexperiment/novadaq pkgs/SRT_ONLINE with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ShmMilliBlock",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ShmMilliBlock. Split from novaexperiment/novadaq pkgs/ShmMilliBlock with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ShmRdWr",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ShmRdWr. Split from novaexperiment/novadaq pkgs/ShmRdWr with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "TDUControl",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - TDUControl. Split from novaexperiment/novadaq pkgs/TDUControl with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "TDUControlClient",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - TDUControlClient. Split from novaexperiment/novadaq pkgs/TDUControlClient with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "TDUUtilities",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - TDUUtilities. Split from novaexperiment/novadaq pkgs/TDUUtilities with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "TDUWeb",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - TDUWeb. Split from novaexperiment/novadaq pkgs/TDUWeb with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "Trace",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - Trace. Split from novaexperiment/novadaq pkgs/Trace with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "TriggerScalars",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - TriggerScalars. Split from novaexperiment/novadaq pkgs/TriggerScalars with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "XmlRpc",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - XmlRpc. Split from novaexperiment/novadaq pkgs/XmlRpc with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "benchmarks",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - benchmarks. Split from novaexperiment/novadaq pkgs/benchmarks with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "dcm_kernel_module",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - dcm_kernel_module. Split from novaexperiment/novadaq pkgs/dcm_kernel_module with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "dcm_linux_system",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - dcm_linux_system. Split from novaexperiment/novadaq pkgs/dcm_linux_system with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "linux_kernel_dcmtdu",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - linux_kernel_dcmtdu. Split from novaexperiment/novadaq pkgs/linux_kernel_dcmtdu with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "nova_gcn_trigger",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - nova_gcn_trigger. Split from novaexperiment/novadaq pkgs/nova_gcn_trigger with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "setup",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - setup. Split from novaexperiment/novadaq pkgs/setup with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "tdu_kernel_module",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - tdu_kernel_module. Split from novaexperiment/novadaq pkgs/tdu_kernel_module with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  },
+  {
+    "name": "ups",
+    "private": true,
+    "archived": false,
+    "has_issues": true,
+    "default_branch": "main",
+    "description": "NOvA DAQ - ups. Split from novaexperiment/novadaq pkgs/ups with history preserved.",
+    "permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    },
+    "issues": [],
+    "issue_error": null
+  }
+]

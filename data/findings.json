@@ -1,0 +1,1033 @@
+[
+  {
+    "id": "NDAQ-001",
+    "package": "TDUWeb",
+    "severity": "P1",
+    "title": "Require authorization for timing hardware mutations",
+    "commit": "e9904eba0d5ef9da4adac18c3f6374523bc008f2",
+    "locations": [
+      {
+        "path": "server/tdu_webserver.py",
+        "start": 26,
+        "end": 43
+      },
+      {
+        "path": "server/tdu_webserver.py",
+        "start": 70,
+        "end": 70
+      }
+    ],
+    "trigger": "A client that can reach port 8080 can issue GET requests to /tdu_sync, /tdu_init or /tdu_scrub. These handlers invoke tduControl directly; the server binds all interfaces and has no authentication or authorization checks.",
+    "impact": "Reachable clients can change timing-control registers or scrub hardware during data taking. GET also allows unintended invocation by browsers and automated URL fetchers. Network exposure in the deployed environment has not been measured.",
+    "fix": "Require authenticated, authorized POST requests for mutations, add CSRF protection where browser credentials are used, and bind to the intended management interface. Keep status endpoints separate from mutation handlers.",
+    "validation": "Mock subprocess execution. Assert anonymous GET/POST requests never invoke tduControl, authorized POST does, and rejected requests leave hardware untouched. Do not reproduce against live timing hardware.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/TDUWeb/issues/1",
+    "github_updated_at": "2026-09-30T18:52:04Z"
+  },
+  {
+    "id": "NDAQ-002",
+    "package": "AshRiver",
+    "severity": "P1",
+    "title": "Preserve alarm checkpoint when SQLite persistence fails",
+    "commit": "d54623861b9a2f0e2432374e3c5f4f522826aa2a",
+    "locations": [
+      {
+        "path": "CM3350/src/run_logger.cpp",
+        "start": 197,
+        "end": 202
+      },
+      {
+        "path": "CM3350/src/run_logger.cpp",
+        "start": 221,
+        "end": 226
+      },
+      {
+        "path": "CM3350/src/run_logger.cpp",
+        "start": 171,
+        "end": 176
+      }
+    ],
+    "trigger": "sqlite3_exec fails while inserting an event or its alarm occurrences, for example because the database is locked or full. write_changes_to_sql logs the failure and returns; main unconditionally replaces previousData.txt with the new counters.",
+    "impact": "The next poll compares against the advanced checkpoint and never retries the lost alarm increments. Event and occurrence inserts can also be partially committed.",
+    "fix": "Write the event and occurrences in one transaction, return an explicit failure on any SQLite error, and advance the checkpoint atomically only after a successful commit. Preserve the old checkpoint on failure.",
+    "validation": "Use a temporary SQLite database and checkpoint. Inject failure into each INSERT and verify rollback plus unchanged checkpoint; retry and verify exactly one complete event with its occurrences.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/AshRiver/issues/1",
+    "github_updated_at": "2026-09-30T18:52:06Z"
+  },
+  {
+    "id": "NDAQ-003",
+    "package": "NovaDataLogger",
+    "severity": "P1",
+    "title": "Write one CRC word when finalizing a run file",
+    "commit": "e048941cdef398dce47cba02cb8adad3d93945a2",
+    "locations": [
+      {
+        "path": "cxx/src/RunStream.cpp",
+        "start": 219,
+        "end": 226
+      }
+    ],
+    "trigger": "RunStream finalizes a nonempty run: size becomes sizeof(uint32_t), then fwrite(&crc, 4, size, ...) requests four four-byte elements from a single four-byte variable.",
+    "impact": "Every execution of this path reads twelve bytes past crc and appends sixteen bytes instead of the one CRC word counted in the run size. This corrupts the file trailer and can leak adjacent stack contents.",
+    "fix": "Write exactly one uint32_t and compare the result against one element, or use byte-sized elements consistently. Verify run-size accounting and downstream parser expectations.",
+    "validation": "Finalize a small synthetic run under AddressSanitizer; assert the trailer contains exactly four CRC bytes and that reported run size equals actual bytes. Reopen it with RawFileParser.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaDataLogger/issues/1",
+    "github_updated_at": "2026-09-30T18:52:07Z"
+  },
+  {
+    "id": "NDAQ-004",
+    "package": "NovaRunControlClient",
+    "severity": "P1",
+    "title": "Avoid incrementing erased map iterators during client destruction",
+    "commit": "1005aac7bfaae11bac3032c20e50e0a7d4fdb221",
+    "locations": [
+      {
+        "path": "cxx/src/RmsMessageClient.cpp",
+        "start": 67,
+        "end": 107
+      }
+    ],
+    "trigger": "Destroy an RmsMessageClient after registering at least one receiver, sender, or DDS connection. Each destructor loop erases its current map iterator and the for-loop increments that invalidated iterator.",
+    "impact": "Undefined behavior can crash cleanup and prevent remaining connections from closing, affecting shutdown and restart of consumers throughout DAQ.",
+    "fix": "Close entries without erasing inside traversal and clear afterward, or advance a valid iterator before erasing. Apply consistently to all three maps.",
+    "validation": "Exercise destruction with zero, one, and multiple entries in each map using checked STL iterators and stub connections; verify every close runs once and no invalid iterator is accessed.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaRunControlClient/issues/1",
+    "github_updated_at": "2026-09-30T18:52:09Z"
+  },
+  {
+    "id": "NDAQ-005",
+    "package": "ResponsiveMessagingSystem",
+    "severity": "P1",
+    "title": "Advance reply-map iterator safely when expiring requests",
+    "commit": "e7d72bb3b45279b9564d1dced3725428c3873eba",
+    "locations": [
+      {
+        "path": "cxx/src/RmsProducer.cpp",
+        "start": 276,
+        "end": 296
+      }
+    ],
+    "trigger": "RmsProducer::verify handles a successful reply while _replyIdTable contains an entry older than _replyTimeout. It erases replyIterator and then increments that same iterator.",
+    "impact": "A routine request timeout can trigger undefined behavior or crash the messaging producer, disrupting control traffic.",
+    "fix": "Use the iterator returned by erase on a supported C++ standard, or increment before erasing. Preserve traversal of adjacent expired entries.",
+    "validation": "Verify with checked iterators for empty, all-expired, and mixed expired/live tables; confirm the live correlation ID is accepted and expired IDs are removed.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/ResponsiveMessagingSystem/issues/1",
+    "github_updated_at": "2026-09-30T18:52:11Z"
+  },
+  {
+    "id": "NDAQ-006",
+    "package": "ResponsiveMessagingSystem",
+    "severity": "P1",
+    "title": "Delete the completed EPICS assembler before invalidating its iterator",
+    "commit": "e7d72bb3b45279b9564d1dced3725428c3873eba",
+    "locations": [
+      {
+        "path": "cxx/src/provider/EpicsMessenger.cpp",
+        "start": 164,
+        "end": 179
+      }
+    ],
+    "trigger": "An incoming fragment completes an existing assembler. monitorChanged erases its vector iterator, notifies listeners, then dereferences the invalidated iterator in delete *i.",
+    "impact": "Completion can delete the next assembler or dereference past the vector end, causing crashes, lost messages, or later double deletion.",
+    "fix": "Save the completed assembler pointer, remove it from the vector, and release that saved object with a clear ownership policy. Account for listener callbacks re-entering the code.",
+    "validation": "Complete the only assembler and then the first of two assemblers under AddressSanitizer; verify one notification, destruction of only the completed object, and successful later completion of the second message.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/ResponsiveMessagingSystem/issues/2",
+    "github_updated_at": "2026-09-30T18:52:12Z"
+  },
+  {
+    "id": "NDAQ-007",
+    "package": "BufferNodeEVB",
+    "severity": "P1",
+    "title": "Handle summary windows older than retained missed-buffer history",
+    "commit": "9c9c0f3b21e37f9e726fa651c6b99284f2a5a14d",
+    "locations": [
+      {
+        "path": "cxx/src/MegaPool.cpp",
+        "start": 842,
+        "end": 848
+      },
+      {
+        "path": "cxx/src/MegaPool.cpp",
+        "start": 868,
+        "end": 885
+      }
+    ],
+    "trigger": "A summary trigger has an end timestamp earlier than every retained missed-buffer entry. The loop advances it to end(), then line 878 dereferences it. The earlier missingData flag does not stop this path.",
+    "impact": "An out-of-history trigger can crash the buffer-node process while reporting incomplete data, interrupting event building.",
+    "fix": "Check for end() before dereference and produce an explicit incomplete summary for unavailable history. Also define behavior for an empty history before front/back access.",
+    "validation": "Cover windows before all history, overlapping history, after history, and empty history with checked iterators. Require a valid incomplete-data result without process termination.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/BufferNodeEVB/issues/1",
+    "github_updated_at": "2026-09-30T18:52:14Z"
+  },
+  {
+    "id": "NDAQ-008",
+    "package": "MetaDataTools",
+    "severity": "P1",
+    "title": "Bound buffer-node metadata traversal to the allocated counter array",
+    "commit": "3693eca92edd78c9c7fd55975fbdbddd9766b30e",
+    "locations": [
+      {
+        "path": "cxx/src/MetaDataRunTool.cc",
+        "start": 261,
+        "end": 261
+      },
+      {
+        "path": "cxx/src/MetaDataRunTool.cc",
+        "start": 910,
+        "end": 919
+      }
+    ],
+    "trigger": "Metadata generation iterates ibuff from 1 through 199, but buffIDs is declared with 100 elements.",
+    "impact": "The normal metadata output path reads outside the array and can report nonexistent buffer nodes or crash. Real buffer IDs above the allocation also need an explicit policy.",
+    "fix": "Use one detector-appropriate capacity shared by allocation, initialization, increment, and output, and validate observed IDs before indexing.",
+    "validation": "Generate metadata for synthetic runs with boundary buffer IDs under AddressSanitizer; assert no out-of-bounds access and an exact BufferNodeList.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/MetaDataTools/issues/1",
+    "github_updated_at": "2026-09-30T18:52:16Z"
+  },
+  {
+    "id": "NDAQ-009",
+    "package": "MetaDataTools",
+    "severity": "P2",
+    "title": "Retain every active DCM in generated metadata",
+    "commit": "3693eca92edd78c9c7fd55975fbdbddd9766b30e",
+    "locations": [
+      {
+        "path": "cxx/src/MetaDataRunTool.cc",
+        "start": 879,
+        "end": 891
+      }
+    ],
+    "trigger": "A run contains more than one active DCM. The first-entry branch uses firstdcm==true instead of assigning firstdcm=true, so every active DCM clears dcmlist again.",
+    "impact": "ActiveDCMs metadata contains only the final DCM encountered, understating detector participation.",
+    "fix": "Set the first-entry flag or build the list with a string/container join that handles separators without repeated clearing.",
+    "validation": "Generate metadata for zero, one, and several active DCMs; verify all expected names appear exactly once.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/MetaDataTools/issues/2",
+    "github_updated_at": "2026-09-30T18:52:18Z"
+  },
+  {
+    "id": "NDAQ-010",
+    "package": "ShmRdWr",
+    "severity": "P1",
+    "title": "Pass real metadata storage to the convenience group-read overload",
+    "commit": "b5fdeeed788b701ebc4b8a2a2603a2203eb41518",
+    "locations": [
+      {
+        "path": "cxx/src/ShmRdWr.cpp",
+        "start": 428,
+        "end": 432
+      },
+      {
+        "path": "cxx/src/ShmRdWr.cpp",
+        "start": 335,
+        "end": 341
+      }
+    ],
+    "trigger": "Call read_grp(dest, max_bytes, timeout, keep, group) with an attached group and readable data. It constructs a reference from a null ShmRdWr_Info pointer, which read_ later writes through.",
+    "impact": "The advertised convenience overload can crash a shared-memory reader. It also ignores its semKeepAfterDataAvail argument by forwarding false.",
+    "fix": "Create a local ShmRdWr_Info and forward it by reference; preserve the requested semaphore behavior. Remove null-reference sentinel conventions from this overload.",
+    "validation": "Use a temporary isolated shared-memory group with one record and test both keep settings under UBSan/ASan; verify returned bytes and semaphore ownership.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/ShmRdWr/issues/1",
+    "github_updated_at": "2026-09-30T18:52:20Z"
+  },
+  {
+    "id": "NDAQ-011",
+    "package": "DetectorPlotter",
+    "severity": "P2",
+    "title": "Keep rrd_xport argument strings alive across vector growth",
+    "commit": "e12078ae40e3f0071d5cfe3fb97e756ae7c97715",
+    "locations": [
+      {
+        "path": "cxx/src/NovaRRDReader.cpp",
+        "start": 49,
+        "end": 95
+      }
+    ],
+    "trigger": "GetSingleVarData takes c_str pointers after each push_back into vs, then continues adding strings. Reallocation can move short strings and invalidate previously stored argv pointers before rrd_xport.",
+    "impact": "RRD reads can fail or read freed memory, especially on modern standard libraries with small-string optimization or when the number of requested variables grows.",
+    "fix": "Build the complete vector of strings first, then construct argv without further mutations; avoid shared static scratch state if calls can run concurrently.",
+    "validation": "Exercise first call and increasing variable counts with short and long arguments under ASan; a stub rrd_xport must receive every intact argument.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DetectorPlotter/issues/1",
+    "github_updated_at": "2026-09-30T18:52:21Z"
+  },
+  {
+    "id": "NDAQ-012",
+    "package": "DataConcentratorModule",
+    "severity": "P1",
+    "title": "Initialize and advance the status-read frame cursor",
+    "commit": "18dbefa32acb189d7861ec56a974a6960dc96766",
+    "locations": [
+      {
+        "path": "dcm_kernel/dcm_status.c",
+        "start": 205,
+        "end": 241
+      }
+    ],
+    "trigger": "A userspace read requests no more words than are currently buffered. The else branch indexes using uninitialized words_to_copy; its while(1) never increments that variable.",
+    "impact": "The legacy driver can index outside its status ring or loop indefinitely in kernel context. Deployment of this driver, rather than dcm_kernel_module, must be confirmed when assigning urgency.",
+    "fix": "Initialize the cursor, advance it by each validated frame length, enforce ring and request bounds, and handle requests too small for one frame. Audit byte-versus-word sizes in the following copy_to_user path.",
+    "validation": "Use a driver unit harness with empty/full/wrapped rings and reads smaller than, equal to, and larger than available data. Every case must terminate and stay within both buffers.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DataConcentratorModule/issues/1",
+    "github_updated_at": "2026-09-30T18:52:23Z"
+  },
+  {
+    "id": "NDAQ-013",
+    "package": "DAQOperationsTools",
+    "severity": "P2",
+    "title": "Remove invalid case terminator from PV archiver health check",
+    "commit": "5b3fd3792f8526e5db7016f961c8e2debea28118",
+    "locations": [
+      {
+        "path": "script/checkPVArchiver.sh",
+        "start": 41,
+        "end": 52
+      }
+    ],
+    "trigger": "Invoke checkPVArchiver.sh. A standalone ;; appears outside a case statement.",
+    "impact": "The health check exits with a shell syntax error instead of a reliable archiver status; earlier top-level commands may already have executed.",
+    "fix": "Remove the unmatched terminator and explicitly define exit status for healthy, stale, and failed-query outcomes.",
+    "validation": "Confirmed locally: bash -n script/checkPVArchiver.sh exits 2 at line 51. After repair, syntax-check and mock psql for positive count, zero count, and query failure.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DAQOperationsTools/issues/1",
+    "github_updated_at": "2026-09-30T18:52:25Z"
+  },
+  {
+    "id": "NDAQ-014",
+    "package": "NovaControlRoom",
+    "severity": "P2",
+    "title": "Close the outer confirmation block in the internal-timing launcher",
+    "commit": "86247acc81d9d311150ecedee08f03b70090d25b",
+    "locations": [
+      {
+        "path": "DAQ-Desktop-Utilities/FarDet/nova-daq-01/ExecuteInteralTimingMode.sh",
+        "start": 22,
+        "end": 22
+      },
+      {
+        "path": "DAQ-Desktop-Utilities/FarDet/nova-daq-01/ExecuteInteralTimingMode.sh",
+        "start": 73,
+        "end": 76
+      }
+    ],
+    "trigger": "Invoke the Far Detector internal timing launcher. The outer if started at line 22 has no matching fi.",
+    "impact": "The timing transition and its verification block cannot execute, preventing the operator workflow from completing.",
+    "fix": "Close the outer block and verify confirmation/cancellation behavior with all external commands mocked.",
+    "validation": "Confirmed locally: bash -n reports unexpected end of file and exits 2. Test cancel at both confirmations and authorized success with mocked kdialog and remote command runners.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaControlRoom/issues/1",
+    "github_updated_at": "2026-09-30T18:52:26Z"
+  },
+  {
+    "id": "NDAQ-015",
+    "package": "FileTransferService",
+    "severity": "P2",
+    "title": "Assign failed-file destination before logging it",
+    "commit": "073251b32cb943d58ade3fc2b32902258ba93b78",
+    "locations": [
+      {
+        "path": "python/fts/filestate.py",
+        "start": 182,
+        "end": 188
+      }
+    ],
+    "trigger": "All states of a file finish with a failure and shouldMoveFailed() is true. checkIfFinished formats a log message using movedir before its assignment on the next line.",
+    "impact": "UnboundLocalError aborts the failed-file transition, preventing quarantine movement, finished-state bookkeeping, and completion callbacks.",
+    "fix": "Resolve the failed destination before logging or scheduling the move; propagate configuration errors through the existing failure path.",
+    "validation": "Use a mocked reactor and file-type config with shouldMoveFailed enabled. Verify the configured move is scheduled and completion bookkeeping executes without touching real archive files.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/FileTransferService/issues/1",
+    "github_updated_at": "2026-09-30T18:52:28Z"
+  },
+  {
+    "id": "NDAQ-016",
+    "package": "FileTransferService",
+    "severity": "P2",
+    "title": "Import error-path dependencies used by the file cleaner",
+    "commit": "073251b32cb943d58ade3fc2b32902258ba93b78",
+    "locations": [
+      {
+        "path": "python/fts/cleaner.py",
+        "start": 1,
+        "end": 7
+      },
+      {
+        "path": "python/fts/cleaner.py",
+        "start": 64,
+        "end": 69
+      },
+      {
+        "path": "python/fts/cleaner.py",
+        "start": 118,
+        "end": 125
+      }
+    ],
+    "trigger": "A candidate disappears before checkForDelete, or unlink raises OSError. These paths reference defer and errno, neither of which is imported in cleaner.py.",
+    "impact": "Expected filesystem races raise NameError instead of returning a successful no-op or a logged deletion failure.",
+    "fix": "Import twisted.internet.defer and errno, and keep the asynchronous return contract consistent across early exits.",
+    "validation": "Mock nonexistent paths and unlink raising ENOENT/EACCES; verify clean completion or the intended failure result without NameError.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/FileTransferService/issues/2",
+    "github_updated_at": "2026-09-30T18:52:29Z"
+  },
+  {
+    "id": "NDAQ-017",
+    "package": "DCM_ProgUtils",
+    "severity": "P2",
+    "title": "Initialize output-file state before DSO readout and scope output",
+    "commit": "e294d36d974d7b60042df6e6030fc558acb26a2c",
+    "locations": [
+      {
+        "path": "cxx/src/dcmDSOReadout.cc",
+        "start": 880,
+        "end": 903
+      },
+      {
+        "path": "cxx/src/dcmScope.cc",
+        "start": 772,
+        "end": 795
+      }
+    ],
+    "trigger": "Enable output-file mode. Both tools use for(int i; i<64; ++i) without initializing i. When scan_flag is false, suffix is also concatenated without being initialized.",
+    "impact": "Output setup can index outside outputfiles or construct a filename from uninitialized stack data, causing failed or misdirected diagnostic output.",
+    "fix": "Initialize the loop counter to zero and construct a defined suffix for every supported mode, ideally using bounded C++ strings.",
+    "validation": "Exercise output mode with scan on/off and mock device access; require deterministic filenames, initialized handles, and clean ASan/UBSan runs.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DCM_ProgUtils/issues/1",
+    "github_updated_at": "2026-09-30T18:52:31Z"
+  },
+  {
+    "id": "NDAQ-018",
+    "package": "RunSummaryUtils",
+    "severity": "P2",
+    "title": "Skip the first event-size delta until a previous size exists",
+    "commit": "148d674e4d44ccea03f1375fdaec4242f8c390c2",
+    "locations": [
+      {
+        "path": "cxx/src/RunSummary.cc",
+        "start": 383,
+        "end": 400
+      }
+    ],
+    "trigger": "Process the first event in each input file. s_last is uninitialized when ds = s_last - s is evaluated.",
+    "impact": "The delta-size histogram receives an undefined first sample, compromising diagnostic summaries and potentially introducing NaN or extreme values.",
+    "fix": "Track whether a previous event exists, fill the delta histogram only for event pairs, and reset that state between files.",
+    "validation": "For known sizes [100, 120, 90], verify exactly two delta samples with the documented sign convention; cover empty and single-event files.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/RunSummaryUtils/issues/1",
+    "github_updated_at": "2026-09-30T18:52:32Z"
+  },
+  {
+    "id": "NDAQ-019",
+    "package": "RawFileParser",
+    "severity": "P1",
+    "title": "Advance past rejected header candidates during marker searches",
+    "commit": "c23da44c4ae2b7770204218a91eacf1b46db1da7",
+    "locations": [
+      {
+        "path": "cxx/src/RawFileParser.cpp",
+        "start": 397,
+        "end": 408
+      },
+      {
+        "path": "cxx/src/RawFileParser.cpp",
+        "start": 553,
+        "end": 563
+      },
+      {
+        "path": "cxx/src/RawFileParser.cpp",
+        "start": 1733,
+        "end": 1743
+      }
+    ],
+    "trigger": "A run or configuration search finds the first magic word followed by a nonmatching second word. The caller increments to check the second word, then decrements back to the first. wordsearch_mem returns the same match on the next iteration.",
+    "impact": "A damaged or coincidentally matching input file can trap parsing in an infinite CPU loop, blocking inspection and metadata pipelines that depend on RawFileParser.",
+    "fix": "On a rejected pair advance past the candidate before resuming; enforce bounds for the adjacent-word check. Apply the same progress invariant to file-I/O variants.",
+    "validation": "Parse synthetic files with isolated first markers, mismatched pairs, a bad pair before a valid pair, and a marker at EOF. Every search must terminate and find only valid pairs.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/RawFileParser/issues/1",
+    "github_updated_at": "2026-09-30T18:59:14Z"
+  },
+  {
+    "id": "NDAQ-020",
+    "package": "RawFileParser",
+    "severity": "P2",
+    "title": "Check open failure with a negative descriptor test",
+    "commit": "c23da44c4ae2b7770204218a91eacf1b46db1da7",
+    "locations": [
+      {
+        "path": "cxx/src/RawFileParser.cpp",
+        "start": 156,
+        "end": 174
+      }
+    ],
+    "trigger": "open() returns descriptor 0 when stdin is closed, or -1 for a missing/unreadable file. The code tests if(!infile), treating descriptor 0 as failure and -1 as success.",
+    "impact": "Valid inputs can fail to open in daemon or redirected environments; invalid inputs are marked open before later errors, and the descriptor-0 path loses track of the open handle.",
+    "fix": "Test infile < 0, preserve the failure result while resetting state, and close any acquired descriptor on subsequent initialization failures.",
+    "validation": "In an isolated child process close stdin, open a temporary valid file, and confirm descriptor 0 works. Test missing, unreadable, and empty files for clean state and no descriptor leaks.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/RawFileParser/issues/2",
+    "github_updated_at": "2026-09-30T18:59:15Z"
+  },
+  {
+    "id": "NDAQ-021",
+    "package": "dcm_kernel_module",
+    "severity": "P1",
+    "title": "Validate register ioctl user copies and MMIO indices",
+    "commit": "e829ed41041a5d95f3f99d048cae63a503f64d79",
+    "locations": [
+      {
+        "path": "dcm_control.c",
+        "start": 553,
+        "end": 575
+      },
+      {
+        "path": "dcm_control.c",
+        "start": 614,
+        "end": 623
+      }
+    ],
+    "trigger": "A process with access to the control device submits an invalid pointer or an index beyond the FPGA/time-command register mapping. The ioctl ignores copy_from_user failures and indexes the MMIO pointer directly.",
+    "impact": "Malformed local requests can read or write outside the mapped register block or use incomplete copied data in kernel context, risking kernel faults and unintended hardware writes. Device access is a prerequisite.",
+    "fix": "Return -EFAULT for incomplete user copies, validate each index against the actual mapping and allowed register set before access, and propagate copy_to_user failures.",
+    "validation": "Use a mocked MMIO region or dedicated driver test target; invalid user pointers and boundary/out-of-range indices must return errors with zero MMIO accesses. Do not probe a live detector.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/dcm_kernel_module/issues/1",
+    "github_updated_at": "2026-09-30T18:59:17Z"
+  },
+  {
+    "id": "NDAQ-022",
+    "package": "DAQMessages",
+    "severity": "P2",
+    "title": "Initialize the receive timeout when copying DDSInbox",
+    "commit": "cd0e5d09b401afc9f3dad448d7838f00cd60e778",
+    "locations": [
+      {
+        "path": "cxx/include/DDSMailbox.hpp",
+        "start": 69,
+        "end": 75
+      },
+      {
+        "path": "cxx/include/DDSMailbox.hpp",
+        "start": 87,
+        "end": 93
+      }
+    ],
+    "trigger": "Copy-construct a DDSInbox and then call receiveMessage. The copy constructor initializes the base and receiver but leaves the unsigned _timeout member indeterminate.",
+    "impact": "The copied inbox passes an undefined timeout to the RMS receiver, causing unpredictable blocking or polling behavior.",
+    "fix": "Copy _timeout from the source (and explicitly initialize listening state), or delete copying if an inbox cannot be safely copied.",
+    "validation": "Construct an inbox with a nondefault timeout, copy it, and use a stub receiver to verify the exact timeout passed on the first receive.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DAQMessages/issues/1",
+    "github_updated_at": "2026-09-30T18:59:19Z"
+  },
+  {
+    "id": "NDAQ-023",
+    "package": "DAQMessagesZMQ",
+    "severity": "P1",
+    "title": "Reject incorrectly sized messages before exposing typed payloads",
+    "commit": "48d08a04ebd6e210afed254bb61c7638c9c206a4",
+    "locations": [
+      {
+        "path": "cxx/include/ZMQMailbox.hpp",
+        "start": 63,
+        "end": 68
+      }
+    ],
+    "trigger": "A peer sends a message shorter or longer than sizeof(T). socket_t::recv treats every nonnegative zmq_recv return as success. Short frames leave fields unchanged/uninitialized; oversized frames are truncated even though the returned original size is larger.",
+    "impact": "Typed consumers can interpret incomplete trigger messages as valid. NovaGlobalTrigger reuses ddtMessage and NovaSuperNova NSNInbox returns its message without checking byte count, so malformed frames can combine new and stale fields.",
+    "fix": "Validate an exact wire size and reject malformed frames without publishing or mutating a usable object. Define a stable serialization contract instead of depending indefinitely on native struct layout.",
+    "validation": "With in-process ZeroMQ sockets send zero, short, exact, and oversized frames; only the exact valid frame may produce a typed result. Verify a rejected frame cannot reuse fields from the preceding valid trigger.",
+    "effort": "M",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DAQMessagesZMQ/issues/1",
+    "github_updated_at": "2026-09-30T18:59:21Z"
+  },
+  {
+    "id": "NDAQ-024",
+    "package": "DAQClusterUtils",
+    "severity": "P2",
+    "title": "Construct manager hostnames without the numeric farm formatter",
+    "commit": "c4b4a0fed76f3aa605ebf0cc9d4a24dd11713f7d",
+    "locations": [
+      {
+        "path": "FarDet/msglogger_balancing/DAQClusterUtils.py",
+        "start": 5,
+        "end": 9
+      },
+      {
+        "path": "FarDet/msglogger_balancing/DAQClusterUtils.py",
+        "start": 16,
+        "end": 24
+      }
+    ],
+    "trigger": "Import the balancing helper. ManagerName contains strings such as master, but ManagerNodes calls make_hostname, whose branches both use numeric %d formatting. On Python 2 this raises TypeError during formatting; Python 3 also rejects the comparison (and requires adapting the earlier range concatenation).",
+    "impact": "Import fails before message-logger balancing can run.",
+    "fix": "Use a separate formatter for named manager hosts and retain numeric formatting for farm nodes. Verify the resulting host inventory against the intended site configuration.",
+    "validation": "Import under the supported interpreter with subprocess mocked; verify numeric farm names and named manager names, including exclusions.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DAQClusterUtils/issues/1",
+    "github_updated_at": "2026-09-30T18:59:23Z"
+  },
+  {
+    "id": "NDAQ-025",
+    "package": "DAQClusterUtils",
+    "severity": "P2",
+    "title": "Use the defined FarmNodes inventory in logger assignment",
+    "commit": "c4b4a0fed76f3aa605ebf0cc9d4a24dd11713f7d",
+    "locations": [
+      {
+        "path": "FarDet/msglogger_balancing/DAQClusterUtils.py",
+        "start": 29,
+        "end": 36
+      }
+    ],
+    "trigger": "Call assignmsgloggertofarm after module initialization is repaired. It looks up farmnodes, but the module defines only FarmNodes.",
+    "impact": "The assignment helper raises NameError instead of selecting a logger, independently of the module hostname construction defect.",
+    "fix": "Use the canonical FarmNodes list and provide a clear error for an unknown node.",
+    "validation": "Call the function for the first three valid farm nodes and an unknown node; verify the intended round-robin mapping and explicit unknown-node handling.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DAQClusterUtils/issues/2",
+    "github_updated_at": "2026-09-30T18:59:25Z"
+  },
+  {
+    "id": "NDAQ-026",
+    "package": "NovaFTS",
+    "severity": "P2",
+    "title": "Use a dictionary fallback when resolving ART process metadata",
+    "commit": "a9c9400970f6431ca1b4d77ea2e046cd3bc3779c",
+    "locations": [
+      {
+        "path": "plugins/nova_art_metadata.py",
+        "start": 44,
+        "end": 47
+      },
+      {
+        "path": "podmanFTS/dd-03/plugins/nova_art_metadata.py",
+        "start": 44,
+        "end": 47
+      },
+      {
+        "path": "podmanFTS/dd-07/plugins/nova_art_metadata.py",
+        "start": 44,
+        "end": 47
+      }
+    ],
+    "trigger": "sam_metadata_dumper emits ProcessName before any Application fields. md.get(\"application\", []) returns a list, then the parser calls .get(\"name\") on it.",
+    "impact": "Metadata extraction raises AttributeError for an ordinary field ordering, blocking registration/transfer of the affected ART file.",
+    "fix": "Use a dictionary fallback and handle the absence or malformed type of application metadata. Keep both container copies synchronized.",
+    "validation": "Extract metadata from ProcessName-only input and from ProcessName preceding/following ApplicationName. Require a valid application mapping without exceptions.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaFTS/issues/1",
+    "github_updated_at": "2026-09-30T18:59:26Z"
+  },
+  {
+    "id": "NDAQ-027",
+    "package": "NovaFTS",
+    "severity": "P2",
+    "title": "Flush the final JSON metadata field at end of input",
+    "commit": "a9c9400970f6431ca1b4d77ea2e046cd3bc3779c",
+    "locations": [
+      {
+        "path": "plugins/nova_art_metadata.py",
+        "start": 27,
+        "end": 34
+      },
+      {
+        "path": "plugins/nova_art_metadata.py",
+        "start": 54,
+        "end": 64
+      }
+    ],
+    "trigger": "The final metadata field is Runs or Parents and input ends without a subsequent numbered field or separator. The parser enters json mode and commits it only when a later delimiter is encountered.",
+    "impact": "Valid trailing run or parent metadata is silently omitted, potentially losing file lineage or preventing correct catalog registration.",
+    "fix": "Flush the pending JSON accumulator at EOF, validate malformed JSON, and apply the correction to the dd-03 and dd-07 copies.",
+    "validation": "Verify Runs and Parents as the last field, with and without trailing newline/separator, and confirm identical parsed metadata.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaFTS/issues/2",
+    "github_updated_at": "2026-09-30T18:59:27Z"
+  },
+  {
+    "id": "NDAQ-028",
+    "package": "FileTransferService",
+    "severity": "P2",
+    "title": "Raise the declared unknown-transfer exception so retries run",
+    "commit": "073251b32cb943d58ade3fc2b32902258ba93b78",
+    "locations": [
+      {
+        "path": "python/fts/sam.py",
+        "start": 16,
+        "end": 16
+      },
+      {
+        "path": "python/fts/sam.py",
+        "start": 184,
+        "end": 193
+      }
+    ],
+    "trigger": "SAM reports Unknown transfer id. The handler raises UnknownSamTransfer, but the defined exception and retry trap are named UnknownSAMTransfer.",
+    "impact": "NameError bypasses the intended unknown-transfer recovery path, stopping status polling without resubmitting the transfer.",
+    "fix": "Raise the declared UnknownSAMTransfer and retain the original context; verify the TransferState errback reschedules the transfer.",
+    "validation": "Mock a SAM unknown-ID response and assert the intended exception reaches the retry handler and one retry is scheduled.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/FileTransferService/issues/3",
+    "github_updated_at": "2026-09-30T18:59:29Z"
+  },
+  {
+    "id": "NDAQ-029",
+    "package": "PowerUtilities",
+    "severity": "P1",
+    "title": "Reject invalid DCM power-on arguments before issuing hardware commands",
+    "commit": "18754bf9a24c298bc02de4debe0cddd930992560",
+    "locations": [
+      {
+        "path": "scripts/DCM_On.sh",
+        "start": 1,
+        "end": 5
+      },
+      {
+        "path": "scripts/DCM_On.sh",
+        "start": 6,
+        "end": 26
+      }
+    ],
+    "trigger": "Invoke DCM_On.sh with three arguments whose first two form a valid address. The wrong-argument branch tries to execute exit/Users/... instead of exit, then falls through to the power commands. Nonnumeric arguments also make the numeric tests fail without terminating.",
+    "impact": "An invalid invocation can still issue voltage and power-switch commands to detector supplies, despite the printed argument error.",
+    "fix": "Fail with a nonzero exit before side effects unless there are exactly two validated integers in range. Apply equivalent validation to related power scripts.",
+    "validation": "Run with snmpset/snmpget/bc replaced by local recording stubs. Zero, one, three, nonnumeric, and out-of-range arguments must never reach a hardware-command stub.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/PowerUtilities/issues/1",
+    "github_updated_at": "2026-09-30T18:59:31Z"
+  },
+  {
+    "id": "NDAQ-030",
+    "package": "NovaFileTransferSystem",
+    "severity": "P2",
+    "title": "Repair the incomplete data-link loop so the script parses",
+    "commit": "50fa25c0b329e180a3b7714d0a9c8645fff16e4d",
+    "locations": [
+      {
+        "path": "scripts/datalink.sh",
+        "start": 6,
+        "end": 12
+      }
+    ],
+    "trigger": "Invoke datalink.sh. The for data in $(find ...) expression has no closing parenthesis or complete loop before the next statements.",
+    "impact": "The script exits with a syntax error and cannot perform its linking/backup workflow.",
+    "fix": "Complete or remove the abandoned loop and define the intended input list before restoring operation; test with temporary directories and mocked external paths.",
+    "validation": "Confirmed locally: bash -n scripts/datalink.sh exits 2 for an unmatched command substitution. Require syntax success and a temporary-directory workflow test after correction.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaFileTransferSystem/issues/1",
+    "github_updated_at": "2026-09-30T18:59:33Z"
+  },
+  {
+    "id": "NDAQ-031",
+    "package": "HoughPoint.old",
+    "severity": "P2",
+    "title": "Use signed arithmetic for Hough coordinate differences",
+    "commit": "2b9784d0d5502fe53fe8c83218db613789272cdb",
+    "locations": [
+      {
+        "path": "cxx/src/HoughPoint.cpp",
+        "start": 54,
+        "end": 76
+      }
+    ],
+    "trigger": "Two hits have oppositely signed coordinate differences, for example cell/plane pairs (1,2) and (2,1). Coordinates are uint32_t, so a negative difference wraps before conversion to float.",
+    "impact": "The computed angle and signed distance can be wrong by orders of magnitude or have the wrong sign, corrupting the legacy reconstruction result.",
+    "fix": "Convert coordinates to a sufficiently wide signed or floating type before subtraction and multiplication; define the intended angle/distance convention for degenerate cases.",
+    "validation": "Use analytic point pairs in all quadrants and swapped point order; compare with a signed double-precision reference, including identical/horizontal/vertical pairs.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/HoughPoint.old/issues/1",
+    "github_updated_at": "2026-09-30T18:59:35Z"
+  },
+  {
+    "id": "NDAQ-032",
+    "package": "NovaTimingUtilities",
+    "severity": "P2",
+    "title": "Compare leap-second thresholds against the original UNIX time",
+    "commit": "6f97c3fba53211f262755d3e5bf7abde275aecd5",
+    "locations": [
+      {
+        "path": "cxx/src/TimingUtilities.cpp",
+        "start": 22,
+        "end": 34
+      },
+      {
+        "path": "cxx/src/TimingUtilities.cpp",
+        "start": 55,
+        "end": 65
+      }
+    ],
+    "trigger": "Convert UNIX second 1435708799 (2015-06-30 23:59:59 UTC). The 2012 adjustment increments the working value to 1435708800, which then incorrectly satisfies the 2015 threshold. The 2016 threshold is similarly reached two seconds early.",
+    "impact": "Conversions immediately before later leap boundaries acquire an extra second, affecting historical timestamp correlation and boundary consistency.",
+    "fix": "Compare every UNIX threshold to the unmodified input timestamp, accumulate the leap offset separately, and validate the inverse conversions against a documented leap table.",
+    "validation": "Test each second around the 2012, 2015, and 2016 boundaries for timespec and timeval overloads against an independent leap-offset table.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaTimingUtilities/issues/1",
+    "github_updated_at": "2026-09-30T18:59:37Z"
+  },
+  {
+    "id": "NDAQ-033",
+    "package": "ups",
+    "severity": "P1",
+    "title": "Stop release packaging when configure, build, or tests fail",
+    "commit": "9695b34d7b9f7ee5ee61977d4473fe2eea2b114d",
+    "locations": [
+      {
+        "path": "build_novadaq.sh",
+        "start": 336,
+        "end": 352
+      },
+      {
+        "path": "build_novadaq.sh",
+        "start": 359,
+        "end": 370
+      }
+    ],
+    "trigger": "cmake, make, or make test returns nonzero. The script has no failure guard and proceeds to make install. If pkgdir/lib already exists, it can announce success, package artifacts, and exit zero.",
+    "impact": "Failed builds/tests can be reported as successful releases and stale or unvalidated artifacts can be distributed.",
+    "fix": "Check each setup/configure/build/test/install command and stop immediately on failure. Validate artifacts from this build rather than relying on a preexisting lib directory.",
+    "validation": "Use command stubs in a temporary build/product tree to fail each stage in turn. Require a nonzero exit, no later install/package invocation, and no success message; cover a preexisting lib directory.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/ups/issues/1",
+    "github_updated_at": "2026-09-30T18:59:39Z"
+  },
+  {
+    "id": "NDAQ-034",
+    "package": "EventBuilderClient",
+    "severity": "P2",
+    "title": "Close failed connection sockets before retry or destruction",
+    "commit": "c09ce105f69b6c71d21b6c680d80db8b1d09b645",
+    "locations": [
+      {
+        "path": "cxx/src/EvbcConnection.cpp",
+        "start": 68,
+        "end": 96
+      },
+      {
+        "path": "cxx/src/EvbcConnection.cpp",
+        "start": 110,
+        "end": 115
+      },
+      {
+        "path": "cxx/src/EvbcConnection.cpp",
+        "start": 47,
+        "end": 53
+      }
+    ],
+    "trigger": "Connect to an unavailable or unresolvable server. After socket creation, error paths mark the connection broken and return without closing the descriptor. Retry/destruction only calls disconnect when isOpen is set, which never occurs on the failed initial connection.",
+    "impact": "Repeated connection attempts leak descriptors and can eventually prevent the client process from opening other sockets or files.",
+    "fix": "Release any owned socket on every failed connection path and on destruction regardless of protocol state, resetting the descriptor to -1. Prefer scoped ownership during connection setup.",
+    "validation": "Repeatedly connect to a local closed port and an invalid address, then destroy the object; descriptor count must remain stable.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/EventBuilderClient/issues/1",
+    "github_updated_at": "2026-09-30T18:59:40Z"
+  },
+  {
+    "id": "NDAQ-035",
+    "package": "NovaEventBuilderClient",
+    "severity": "P2",
+    "title": "Initialize the DCM descriptor before simulated-reader cleanup",
+    "commit": "e43f9a9047dc4e0d153159bd364441ca2f837f78",
+    "locations": [
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 25,
+        "end": 32
+      },
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 61,
+        "end": 65
+      },
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 75,
+        "end": 89
+      }
+    ],
+    "trigger": "Construct/configure a DCMReader with generateData=true and later destroy it. _dcmDataHandle is assigned only in hardware mode but is unconditionally passed to close in the destructor.",
+    "impact": "Simulated-reader cleanup uses an indeterminate descriptor and can close an unrelated file/socket or trigger undefined behavior.",
+    "fix": "Initialize the descriptor to -1 and close only a valid owned descriptor. Preserve that invariant on construction/configuration failures.",
+    "validation": "Use a simulated reader with unrelated sentinel descriptors open and verify construction/destruction leaves them usable; test failed hardware initialization separately.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaEventBuilderClient/issues/1",
+    "github_updated_at": "2026-09-30T18:59:42Z"
+  },
+  {
+    "id": "NDAQ-036",
+    "package": "NovaEventBuilderClient_OLD",
+    "severity": "P2",
+    "title": "Initialize the DCM descriptor before simulated-reader cleanup",
+    "commit": "d0de530f1417315ca2cbc92688c3d222ecbcaa36",
+    "locations": [
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 28,
+        "end": 35
+      },
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 64,
+        "end": 68
+      },
+      {
+        "path": "cxx/src/DCMReader.cpp",
+        "start": 78,
+        "end": 92
+      }
+    ],
+    "trigger": "Construct/configure a DCMReader with generateData=true and later destroy it. _dcmDataHandle is assigned only in hardware mode but is unconditionally passed to close in the destructor.",
+    "impact": "Simulated-reader cleanup uses an indeterminate descriptor and can close an unrelated file/socket or trigger undefined behavior.",
+    "fix": "Initialize the descriptor to -1 and close only a valid owned descriptor. Preserve that invariant on construction/configuration failures.",
+    "validation": "Use a simulated reader with unrelated sentinel descriptors open and verify construction/destruction leaves them usable; test failed hardware initialization separately.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/NovaEventBuilderClient_OLD/issues/1",
+    "github_updated_at": "2026-09-30T18:59:44Z"
+  },
+  {
+    "id": "NDAQ-037",
+    "package": "RunSummaryUtils",
+    "severity": "P3",
+    "title": "Initialize the DCM identifier before printing it in FEB macros",
+    "commit": "148d674e4d44ccea03f1375fdaec4242f8c390c2",
+    "locations": [
+      {
+        "path": "macros/FebProcedure.C",
+        "start": 61,
+        "end": 86
+      },
+      {
+        "path": "macros/FebProcedure2.C",
+        "start": 72,
+        "end": 98
+      }
+    ],
+    "trigger": "FebProcedure and FebProcedure2 print the automatic unsigned variable fdcm before the later assignment derived from idcm. Every invocation reaches this first diagnostic with an indeterminate value.",
+    "impact": "The opening diagnostic can report a bogus DCM identifier and reads an uninitialized scalar. The later assignment corrects subsequent uses, so the demonstrated impact is limited to the initial diagnostic.",
+    "fix": "Compute fdcm before the first printf, or remove the premature diagnostic in both macro versions.",
+    "validation": "Run both macros with a known idcm using fixture files and verify that all reported real DCM identifiers equal idcm > 99 ? idcm - 100 : idcm. Compile with uninitialized-variable warnings enabled.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/RunSummaryUtils/issues/2"
+  },
+  {
+    "id": "NDAQ-038",
+    "package": "RunSummaryUtils",
+    "severity": "P3",
+    "title": "Close the input file when FEB macro output creation fails",
+    "commit": "148d674e4d44ccea03f1375fdaec4242f8c390c2",
+    "locations": [
+      {
+        "path": "macros/FebProcedure4.C",
+        "start": 244,
+        "end": 260
+      },
+      {
+        "path": "macros/FebProcedure5.C",
+        "start": 266,
+        "end": 282
+      }
+    ],
+    "trigger": "With isNtupleCreated enabled, the input fopen can succeed while the output fopen fails (for example, insufficient directory permissions). Both macro versions return immediately from that branch without closing file1; their normal fclose is below the processing loop.",
+    "impact": "Each failed invocation retains an input descriptor in the ROOT session. Repeated retries can accumulate descriptors until subsequent file opens fail.",
+    "fix": "Close the already-open input before the failure return, or use a scoped file owner that closes both streams on all exits.",
+    "validation": "Use an existing fixture input and an unwritable output directory, invoke repeatedly in one process, and verify the descriptor count stays constant. Verify the successful output path still closes both streams.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/RunSummaryUtils/issues/3"
+  },
+  {
+    "id": "NDAQ-039",
+    "package": "PedestalAnalysis_Scripts",
+    "severity": "P3",
+    "title": "Check the first-scan guard before reading previous channel state",
+    "commit": "b3fc11787f0cbc99ae0be1a0030706d744abe36a",
+    "locations": [
+      {
+        "path": "makeDsoPlots.C",
+        "start": 880,
+        "end": 885
+      },
+      {
+        "path": "makeDsoPlots.C",
+        "start": 910,
+        "end": 947
+      }
+    ],
+    "trigger": "On the first analyzed scan, prevstate has not been initialized. Both transition conditions evaluate prevstate[idcm][ifeb][ipixel] as the left operand of && before evaluating iscan != startscan. The later assignment only initializes it after this read.",
+    "impact": "First-scan processing reads an indeterminate scalar. The right-hand first-scan guard prevents the transition body from running in the apparent control flow, so no incorrect flip count is established; the defect is undefined behavior in the compiled macro.",
+    "fix": "Evaluate iscan != startscan first, or explicitly initialize prevstate when setting up the first scan. Preserve the rule that the first observation is not a transition.",
+    "validation": "Extract the channel-transition loop into a fixture harness or run an instrumented macro on a single scan and on known good/bad transitions. Verify no uninitialized reads, zero flips for one scan, and the expected count for subsequent changes.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/PedestalAnalysis_Scripts/issues/1"
+  },
+  {
+    "id": "NDAQ-040",
+    "package": "DetectorPlotter",
+    "severity": "P2",
+    "title": "Check ROOT canvas lookups before cloning them",
+    "commit": "e12078ae40e3f0071d5cfe3fb97e756ae7c97715",
+    "locations": [
+      {
+        "path": "scripts/showDSOHistos.C",
+        "start": 62,
+        "end": 85
+      }
+    ],
+    "trigger": "getCanvai calls f.Get for cFebMask, cPixelMask, and cThresholds and immediately dereferences each result with canv->Clone(). Its not-found checks examine the clone only after that dereference. A ROOT file missing any expected canvas reaches the null dereference.",
+    "impact": "Viewing an incomplete or incompatible DSO histogram file can crash the ROOT session instead of reporting the missing canvas. Existing diagnostic messages do not protect this path.",
+    "fix": "Validate each f.Get result and its type before cloning or reading its name. Return a clear incomplete-input result and make callers skip any absent canvases safely.",
+    "validation": "Create a ROOT fixture with all canvases, then fixtures missing each expected canvas and an unreadable file. Verify the valid file renders and the invalid inputs produce diagnostics without crashing.",
+    "effort": "S",
+    "status": "open",
+    "issue_url": "https://github.com/NovaDAQ/DetectorPlotter/issues/2"
+  }
+]

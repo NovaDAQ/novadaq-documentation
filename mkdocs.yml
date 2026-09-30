@@ -1,0 +1,184 @@
+site_name: NOvA DAQ Documentation
+site_description: Package reference, operations, dependencies, and review priorities
+repo_url: https://github.com/NovaDAQ/novadaq-documentation
+use_directory_urls: false
+theme:
+  name: material
+  font: false
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+plugins:
+  - search
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+extra_javascript:
+  - assets/explorer.js
+extra_css:
+  - assets/style.css
+validation:
+  nav:
+    omitted_files: info
+  links:
+    not_found: warn
+    unrecognized_links: warn
+nav:
+  - Home: index.md
+  - Review:
+      - Priorities: review/index.md
+      - Coverage: review/coverage.md
+      - Methodology: review/methodology.md
+      - Validation: review/validation.md
+      - Snapshot: review/snapshot.md
+  - Architecture:
+      - System: architecture/index.md
+      - Dependencies: architecture/dependencies.md
+      - Explorer: architecture/explorer.md
+  - Operations:
+      - Runbook: operations/index.md
+      - Build and release: operations/build.md
+      - Recovery: operations/recovery.md
+  - Packages:
+      - Catalog: packages/index.md
+      - Analysis:
+          - ChannelDecoder: packages/ChannelDecoder.md
+          - DAQHit.old: packages/DAQHit.old.md
+          - DetectorPlotter: packages/DetectorPlotter.md
+          - EventDump: packages/EventDump.md
+          - EventMemoryViewer: packages/EventMemoryViewer.md
+          - EvtDispatcher_Viewer: packages/EvtDispatcher_Viewer.md
+          - HoughPoint.old: packages/HoughPoint.old.md
+          - PedestalAnalysis_Scripts: packages/PedestalAnalysis_Scripts.md
+          - RunCoord: packages/RunCoord.md
+          - RunSummaryUtils: packages/RunSummaryUtils.md
+      - Build and release:
+          - SRT_ONLINE: packages/SRT_ONLINE.md
+          - setup: packages/setup.md
+          - ups: packages/ups.md
+      - Control:
+          - DAQApplicationManager: packages/DAQApplicationManager.md
+          - DDTManager: packages/DDTManager.md
+          - DatabaseUtils: packages/DatabaseUtils.md
+          - NovaDAQConfiguration: packages/NovaDAQConfiguration.md
+          - NovaDatabase: packages/NovaDatabase.md
+          - NovaResourceManager: packages/NovaResourceManager.md
+          - NovaResoureManager: packages/NovaResoureManager.md
+          - NovaRunControl: packages/NovaRunControl.md
+          - NovaRunControlClient: packages/NovaRunControlClient.md
+          - NovaRunControlClient_OLD: packages/NovaRunControlClient_OLD.md
+          - PixelMaskTool: packages/PixelMaskTool.md
+          - RunControlClient: packages/RunControlClient.md
+          - RunControlClient_OLD: packages/RunControlClient_OLD.md
+      - Core libraries:
+          - DAQChannelMap: packages/DAQChannelMap.md
+          - DAQDataFormats: packages/DAQDataFormats.md
+          - DAQQualityCheck: packages/DAQQualityCheck.md
+          - NovaDAQConventions: packages/NovaDAQConventions.md
+          - NovaDAQUtilities: packages/NovaDAQUtilities.md
+          - NovaTimingUtilities: packages/NovaTimingUtilities.md
+          - PackageVersion: packages/PackageVersion.md
+          - RawFileParser: packages/RawFileParser.md
+      - Data path:
+          - BufferNodeEVB: packages/BufferNodeEVB.md
+          - DCMApplication: packages/DCMApplication.md
+          - DispatcherClient: packages/DispatcherClient.md
+          - EventBuilder: packages/EventBuilder.md
+          - EventBuilderClient: packages/EventBuilderClient.md
+          - EventBuilderClient_OLD: packages/EventBuilderClient_OLD.md
+          - EventBuilder_OLD: packages/EventBuilder_OLD.md
+          - EventDispatcher: packages/EventDispatcher.md
+          - EventDispatcher_Client: packages/EventDispatcher_Client.md
+          - EventDispatcher_Server: packages/EventDispatcher_Server.md
+          - EventDispatcher_Server_FMWK: packages/EventDispatcher_Server_FMWK.md
+          - NovaDataLogger: packages/NovaDataLogger.md
+          - NovaDataLogger_OLD: packages/NovaDataLogger_OLD.md
+          - NovaEventBuilder: packages/NovaEventBuilder.md
+          - NovaEventBuilderClient: packages/NovaEventBuilderClient.md
+          - NovaEventBuilderClient_OLD: packages/NovaEventBuilderClient_OLD.md
+          - NovaEventBuilder_OLD: packages/NovaEventBuilder_OLD.md
+          - SHM_Utilities: packages/SHM_Utilities.md
+          - ShmMilliBlock: packages/ShmMilliBlock.md
+          - ShmRdWr: packages/ShmRdWr.md
+      - Hardware:
+          - DCMBootLoader: packages/DCMBootLoader.md
+          - DCMGuiTools: packages/DCMGuiTools.md
+          - DCM_ProgUtils: packages/DCM_ProgUtils.md
+          - DCMulator: packages/DCMulator.md
+          - DataConcentratorModule: packages/DataConcentratorModule.md
+          - FEBCheckoutVerify: packages/FEBCheckoutVerify.md
+          - NovaDAQCheckout: packages/NovaDAQCheckout.md
+          - NovaFirmware: packages/NovaFirmware.md
+          - PedestalDataRunner: packages/PedestalDataRunner.md
+          - dcm_kernel_module: packages/dcm_kernel_module.md
+          - dcm_linux_system: packages/dcm_linux_system.md
+          - linux_kernel_dcmtdu: packages/linux_kernel_dcmtdu.md
+          - tdu_kernel_module: packages/tdu_kernel_module.md
+      - Messaging:
+          - DAQMessages: packages/DAQMessages.md
+          - DAQMessagesZMQ: packages/DAQMessagesZMQ.md
+          - DAQNetworkUtils: packages/DAQNetworkUtils.md
+          - DDSSimD: packages/DDSSimD.md
+          - EpicsProviderForMessaging: packages/EpicsProviderForMessaging.md
+          - EventDispatcher_CommandSet: packages/EventDispatcher_CommandSet.md
+          - NovaMessageDefinitions: packages/NovaMessageDefinitions.md
+          - ResponsiveMessagingSystem: packages/ResponsiveMessagingSystem.md
+          - XmlRpc: packages/XmlRpc.md
+      - Monitoring:
+          - Dashboard: packages/Dashboard.md
+          - ErrorHandler: packages/ErrorHandler.md
+          - NovaDAQLiveTimeMonitor: packages/NovaDAQLiveTimeMonitor.md
+          - NovaDAQMonitor: packages/NovaDAQMonitor.md
+          - NovaDAQMonitorClient: packages/NovaDAQMonitorClient.md
+          - NovaDAQMonitor_OLD: packages/NovaDAQMonitor_OLD.md
+          - NovaDaqDcs: packages/NovaDaqDcs.md
+          - NovaMessageLogger: packages/NovaMessageLogger.md
+          - NovaPreSNShiftGUI: packages/NovaPreSNShiftGUI.md
+          - NovaWANMonitor: packages/NovaWANMonitor.md
+          - Trace: packages/Trace.md
+          - TriggerScalars: packages/TriggerScalars.md
+      - Operations:
+          - AshRiver: packages/AshRiver.md
+          - DAQClusterUtils: packages/DAQClusterUtils.md
+          - DAQOperationsTools: packages/DAQOperationsTools.md
+          - FarDetectorPowerOn: packages/FarDetectorPowerOn.md
+          - NovaControlRoom: packages/NovaControlRoom.md
+          - NovaDAQCrontab: packages/NovaDAQCrontab.md
+          - NovaRemoteControlRooms: packages/NovaRemoteControlRooms.md
+          - PowerUtilities: packages/PowerUtilities.md
+      - Simulation and examples:
+          - DAQSimulationManager: packages/DAQSimulationManager.md
+          - DispatcherClientExampleApp: packages/DispatcherClientExampleApp.md
+          - EvtDispatcher_PatternGenerator: packages/EvtDispatcher_PatternGenerator.md
+          - ExternalPackageTest: packages/ExternalPackageTest.md
+          - MockDataDAQ: packages/MockDataDAQ.md
+          - NDLTest: packages/NDLTest.md
+          - NovaDAQTemplate: packages/NovaDAQTemplate.md
+          - NovaDAQTemplate_OLD: packages/NovaDAQTemplate_OLD.md
+          - RootDAQTemplate: packages/RootDAQTemplate.md
+          - benchmarks: packages/benchmarks.md
+      - Storage and metadata:
+          - FileTransferService: packages/FileTransferService.md
+          - MetaDataTools: packages/MetaDataTools.md
+          - NovaFTS: packages/NovaFTS.md
+          - NovaFileTransferSystem: packages/NovaFileTransferSystem.md
+      - Timing and triggers:
+          - NOvABeam: packages/NOvABeam.md
+          - NovaGlobalTrigger: packages/NovaGlobalTrigger.md
+          - NovaSNEWSInterface: packages/NovaSNEWSInterface.md
+          - NovaSpillServer: packages/NovaSpillServer.md
+          - NovaSuperNova: packages/NovaSuperNova.md
+          - TDUControl: packages/TDUControl.md
+          - TDUControlClient: packages/TDUControlClient.md
+          - TDUUtilities: packages/TDUUtilities.md
+          - TDUWeb: packages/TDUWeb.md
+          - nova_gcn_trigger: packages/nova_gcn_trigger.md
+  - Maintaining this suite: contributing.md
