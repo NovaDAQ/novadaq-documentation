@@ -2,6 +2,7 @@
 
 Documentation and a severity-ranked code review for all 120 NOvA DAQ package repositories.
 
+- [Published documentation](https://novadaq.github.io/novadaq-documentation/)
 - [Remediation priorities and GitHub issues](docs/review/index.md)
 - [Package catalog](docs/packages/index.md)
 - [System architecture](docs/architecture/index.md) and [dependency diagrams](docs/architecture/dependencies.md)
